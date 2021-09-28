@@ -44,12 +44,19 @@
                 </div>
             </div>
         </div>
-        <div>
-            <div v-if="tryptiqueIsActive">volet tryptique du pare brise : {{ choixTryptique }}</div>
-            <div v-if="dome > 0">volet de dôme : {{ dome }}</div>
-            <div v-if="lanterneau > 0">volet de lanterneau : {{ lanterneau }}</div>
-            <div v-if="skydome > 0">volet de skydôme : {{ skydome }}</div>
-            <div>C'est tout, merci ! Je génère mon devis</div>
+        <div v-show="domes"class="row">
+            <div class="horsGabarit col text-center"  v-on:click="domeCompteur">
+                <img width="250" height="250" class="rounded-circle object-fit shadow" src="https://nouvelair-preprod.rouen-webmaster.com/wp-content/uploads/2021/07/dome-heki-3-plus.png" alt=""> <br>
+                Volet de dôme 
+            </div>
+            <div class="horsGabarit col text-center"  v-on:click="lanterneauCompteur">
+                <img width="250" height="250" class="rounded-circle object-fit shadow" src="https://nouvelair-preprod.rouen-webmaster.com/wp-content/uploads/2021/07/dome-mini-heki.png" alt=""> <br>
+                Volet de lanterneau
+            </div>
+            <div class="horsGabarit col text-center"  v-on:click="skydomeCompteur">
+                <img width="250" height="250" class="rounded-circle object-fit shadow" src="https://nouvelair-preprod.rouen-webmaster.com/wp-content/uploads/2021/06/skydome-partiellement-integre.png" alt=""> <br>
+                Volet de skydôme
+            </div>
         </div>
         <div v-show="tryptique">
             <div  class="volets-tryptiques row my-5">
@@ -76,28 +83,69 @@
             </div>
         </div>
         <div v-show="baies">
-            PAGE BAIES
+            <div class="d-flex justify-content-center">
+                <h3 >Je renseigne les quantités et les différentes dimensions</h3>
+            </div>
+            <div class="d-flex mt-5">
+                <div class="imgBaie" style="background-color:grey;width:200px;height:200px;"></div>
+                <div style="background-color:red;">
+                    <div class="d-flex">
+                        <span>Baie 1 L</span>
+                        <input style="width:80px;height:20px;">
+                        <span>cm x H</span>
+                        <input style="width:80px;height:20px;">
+                        <span>cm</span>
+                    </div>
+                    <div class="d-flex">
+                        <span>Baie 1 L</span>
+                        <input style="width:80px;height:20px;">
+                        <span>cm x H</span>
+                        <input style="width:80px;height:20px;">
+                        <span>cm</span>
+                    </div>
+                    <div class="d-flex">
+                        <span>Baie 1 L</span>
+                        <input style="width:80px;height:20px;">
+                        <span>cm x H</span>
+                        <input style="width:80px;height:20px;">
+                        <span>cm</span>
+                    </div>
+                    <div class="d-flex">
+                        <span>Baie 1 L</span>
+                        <input style="width:80px;height:20px;">
+                        <span>cm x H</span>
+                        <input style="width:80px;height:20px;">
+                        <span>cm</span>
+                    </div>
+                    <div class="d-flex">
+                        <span>Baie 1 L</span>
+                        <input style="width:80px;height:20px;">
+                        <span>cm x H</span>
+                        <input style="width:80px;height:20px;">
+                        <span>cm</span>
+                    </div>
+                    <div class="d-flex">
+                        <span>Baie 1 L</span>
+                        <input style="width:80px;height:20px;">
+                        <span>cm x H</span>
+                        <input style="width:80px;height:20px;">
+                        <span>cm</span>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div v-show="domes"class="row">
-            <div class="horsGabarit col text-center"  v-on:click="domeCompteur">
-                <img width="250" height="250" class="rounded-circle object-fit shadow" src="https://nouvelair-preprod.rouen-webmaster.com/wp-content/uploads/2021/07/dome-heki-3-plus.png" alt=""> <br>
-                Volet de dôme 
-            </div>
-            <div class="horsGabarit col text-center"  v-on:click="lanterneauCompteur">
-                <img width="250" height="250" class="rounded-circle object-fit shadow" src="https://nouvelair-preprod.rouen-webmaster.com/wp-content/uploads/2021/07/dome-mini-heki.png" alt=""> <br>
-                Volet de lanterneau
-            </div>
-            <div class="horsGabarit col text-center"  v-on:click="skydomeCompteur">
-                <img width="250" height="250" class="rounded-circle object-fit shadow" src="https://nouvelair-preprod.rouen-webmaster.com/wp-content/uploads/2021/06/skydome-partiellement-integre.png" alt=""> <br>
-                Volet de skydôme
-            </div>
-            
+        <div>
+            <div v-if="tryptiqueIsActive">volet tryptique du pare brise : {{ choixTryptique }}</div>
+            <div v-if="dome > 0">volet de dôme : {{ dome }}</div>
+            <div v-if="lanterneau > 0">volet de lanterneau : {{ lanterneau }}</div>
+            <div v-if="skydome > 0">volet de skydôme : {{ skydome }}</div>
         </div>
+        
+        
         <div v-show="formulaire">
             FORMULAIRE RECAP
         </div>
         <div>
-            <div v-if="tryptiqueIsActive">volet tryptique du pare brise : {{ choixTryptique }}</div>
             <button v-on:click="tryptiquePage">Ajouter des tryptiques</button>
             <button v-on:click="baiesPage">Ajouter des baies</button>
             <button v-on:click="domesPage">Ajouter un dome</button>
@@ -172,6 +220,13 @@
                     this.baies = false;
                     this.accueil = false;
                     this.formulaire = false;
+
+                    console.log(this.choixTryptique.length)
+                    if (this.choixTryptique.length < 1) {
+                        this.tryptiqueIsActive = false;
+                    } else {
+                        this.tryptiqueIsActive = true;
+                    }
                 },
                 domesPage() {
                     this.tryptique = false;
@@ -179,6 +234,9 @@
                     this.baies = false;
                     this.accueil = false;
                     this.formulaire = false;
+                    this.tryptiqueIsActive = false;
+
+
                     if(this.tryptiqueIsActive !== false) {
                         this.buttonTryptique = true;
                     }
@@ -190,7 +248,12 @@
                     this.baies = true;
                     this.accueil = false;
                     this.formulaire = false;
+                    this.tryptiqueIsActive = false;
 
+                    
+                    if(this.tryptiqueIsActive !== false) {
+                        this.buttonTryptique = true;
+                    }
                 },
                 accueilPage() {
                     this.tryptique = false;
