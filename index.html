@@ -156,19 +156,47 @@
                       id="lastname"
                       type="text"
                       name="lastname"
-                    >
+                    > <br>
                     <label for="firstname">Firstame</label>
                     <input
                       id="firstname"
                       type="text"
                       name="firstname"
-                    >
-                    <label for="firstname">E-mail</label>
+                      v-model="firstname"
+                    > <br>
+                    <label for="email">E-mail</label>
                     <input
                       id="email"
                       type="email"
                       name="email"
                       v-model="email"
+                    > <br>
+                    <label for="telephone">Téléphone</label>
+                    <input
+                      id="telephone"
+                      type="telephone"
+                      name="telephone"
+                      v-model="email"
+                    > <br>
+                    <label for="marque">Marque de camping-car</label>
+                    <input
+                      id="marque"
+                      type="marque"
+                      name="marque"
+                    > <br>
+                    <label for="modele">Modèle du camping-car</label>
+                    <input
+                      id="modele"
+                      type="modele"
+                      name="modele"
+                      v-model="modele"
+                    > <br>
+                    <label for="type">Type du camping-car</label>
+                    <input
+                      id="type"
+                      type="type"
+                      name="type"
+                      v-model="type"
                     >
                 </p>
                 <p>
@@ -213,7 +241,7 @@
                 choixTryptique: [],
 
                 errors: [],
-                name: null,
+                firstname: null,
                 email: null
 
             },
