@@ -12,98 +12,157 @@
    
 
     <div id="app" >
-        
+        <div v-show="accueil">
             <h1 class="my-4 text-center">Démarrez votre devis</h1>
             <h2 class="my-4 text-center">Laissez-vous guider, votre devis en quelques secondes</h2>
             <div class="d-flex justify-content-around align-items-center">
-                <div class="card w-25 shadow" v-o>
+                <div class="card w-25 shadow" >
                     <img class="card-img-top" src="https://nouvelair-preprod.rouen-webmaster.com/wp-content/themes/essentials-child/devis-front/img/image-devis-volets-triptyque.png" alt="Card image cap">
                     <div class="card-body">
-                      <h5 class="card-title">Card title</h5>
+                      <h5 class="card-title">Volets tryptiques</h5>
                       <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                      <a href="#" class="btn btn-primary">Go somewhere</a>
+                      <a href="#" class="btn btn-primary" v-on:click="tryptiquePage">Choisir mes volets tryptiques</a>
                     </div>
                 </div>
 
-                <div class="card w-25 shadow">
+                <div class="card w-25">
                     <img class="card-img-top" src="https://nouvelair-preprod.rouen-webmaster.com/wp-content/themes/essentials-child/devis-front/img/image-devis-volets-de-baies.png" alt="Card image cap">
                     <div class="card-body">
                       <h5 class="card-title">Card title</h5>
                       <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                      <a href="#" class="btn btn-primary">Go somewhere</a>
+                      <a href="#" class="btn btn-primary" v-on:click="baiesPage">Go somewhere</a>
                     </div>
                 </div>
 
-                <div class="card w-25 shadow">
+                <div class="card w-25">
                     <img class="card-img-top" src="https://nouvelair-preprod.rouen-webmaster.com/wp-content/themes/essentials-child/devis-front/img/image-devis-volets-de-domes.png" alt="Card image cap">
                     <div class="card-body">
                       <h5 class="card-title">Card title</h5>
                       <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                      <a href="#" class="btn btn-primary">Go somewhere</a>
+                      <a href="#" class="btn btn-primary" v-on:click="domesPage">Go somewhere</a>
                     </div>
                 </div>
 
             </div>
+        </div>
+        <div>
+            <div v-if="tryptiqueIsActive">volet tryptique du pare brise : {{ choixTryptique }}</div>
+            <div>C'est tout, merci ! Je génère mon devis</div>
+        </div>
+        <div v-show="tryptique">
         
-
-        
-            <div class="volets-tryptiques row my-5">
-                <div class="integral col text-center " v-on:click="integralCC">
-                    <img src="https://nouvelair-preprod.rouen-webmaster.com/wp-content/uploads/2021/06/integral.jpg" width="250" height="250" class="rounded-circle object-fit shadow" alt=""> <br>
-                    Integral
-                </div>
-                <div class="profile col text-center "  v-on:click="profileCC">
-                    <img src="https://nouvelair-preprod.rouen-webmaster.com/wp-content/uploads/2021/06/profile.jpg" width="250" height="250" class="rounded-circle object-fit shadow" alt=""><br>
-                    profile
-                </div>
-                <div class="capucine col text-center "  v-on:click="capucineCC">
-                    <img src="https://nouvelair-preprod.rouen-webmaster.com/wp-content/uploads/2021/06/capucine.jpg" width="250" height="250" class="rounded-circle object-fit shadow" alt=""><br>
-                    capucine
-                </div>
-                <div class="fourgon col text-center "  v-on:click="fourgonCC">
-                    <img src="https://nouvelair-preprod.rouen-webmaster.com/wp-content/uploads/2021/06/fourgon.jpg" width="250" height="250" class="rounded-circle object-fit shadow" alt=""><br>
-                    fourgon
-                </div>
-                <div class="horsGabarit col text-center"  v-on:click="horsGabaritCC">
-                    <img src="" alt="">
-                    horsGabarit
-                </div>
+        <div  class="volets-tryptiques row my-5">
+            <div class="integral col text-center " v-on:click="integralCC">
+                <img src="https://nouvelair-preprod.rouen-webmaster.com/wp-content/uploads/2021/06/integral.jpg" width="250" height="250" class="rounded-circle object-fit shadow" alt=""> <br>
+                Integral
             </div>
+            <div class="profile col text-center "  v-on:click="profileCC">
+                <img src="https://nouvelair-preprod.rouen-webmaster.com/wp-content/uploads/2021/06/profile.jpg" width="250" height="250" class="rounded-circle object-fit shadow" alt=""><br>
+                profile
+            </div>
+            <div class="capucine col text-center "  v-on:click="capucineCC">
+                <img src="https://nouvelair-preprod.rouen-webmaster.com/wp-content/uploads/2021/06/capucine.jpg" width="250" height="250" class="rounded-circle object-fit shadow" alt=""><br>
+                capucine
+            </div>
+            <div class="fourgon col text-center "  v-on:click="fourgonCC">
+                <img src="https://nouvelair-preprod.rouen-webmaster.com/wp-content/uploads/2021/06/fourgon.jpg" width="250" height="250" class="rounded-circle object-fit shadow" alt=""><br>
+                fourgon
+            </div>
+            <div class="horsGabarit col text-center"  v-on:click="horsGabaritCC">
+                <img src="" alt="">
+                horsGabarit
+            </div>
+        </div>
+        </div>
+        <div v-show="baies">
+            PAGE BAIES
+        </div>
+        <div v-show="domes">
+            PAGE DOMES
+        </div>
+        <div v-show="formulaire">
+            FORMULAIRE RECAP
+        </div>
     </div>
 
     <script>
         var app = new Vue({
             el: '#app',
             data: {
-                accessoires: [
-                    {voletTryptique : false},
-                    {baies : false},
-                    {domes : false},
-                ],
+                accueil : true,
+                tryptique : false,
+                baies : false,
+                domes : false,
+                formulaire : false,
                 type: [],
+                tryptiqueIsActive: false,
+                choixTryptique: []
             },
+
             methods: {
                 addType() {
                     console.log(this.type)
                 },
                 integralCC() {
                     this.type= []
-                    this.type.push("integral")
-                    console.log(this.type)
+                    this.type.push("integral");
+                    this.tryptiqueIsActive = true;
+                    this.choixTryptique = "INTEGRAL"
                 },
                 capucineCC() {
                     this.type = []
                     this.type.push("capucine")
-                    console.log(this.type)
+                    this.tryptiqueIsActive = true;
+                    this.choixTryptique = "CAPUCINE"
                 },
                 fourgonCC() {
+                    this.type = []
                     this.type.push("fourgon")
+                    this.tryptiqueIsActive = true;
+                    this.choixTryptique = "FOURGON"
                 },
                 profileCC() {
+                    this.type = []
                     this.type.push("profile")
+                    this.tryptiqueIsActive = true;
+                    this.choixTryptique = "PROFILE"
                 },
                 horsGabaritCC() {
+                    this.type = []
                     this.type.push("horsGabarit")
+                    this.tryptiqueIsActive = true;
+                    this.choixTryptique = "HORSGABARIT"
+                },
+                tryptiquePage() {
+                    this.tryptique = true;
+                    this.domes = false;
+                    this.baies = false;
+                    this.accueil = false;
+                    this.formulaire = false;
+                },
+                domesPage() {
+                    this.tryptique = false;
+                    this.domes = true;
+                    this.baies = false;
+                    this.accueil = false;
+                    this.formulaire = false;
+
+                },
+                baiesPage() {
+                    this.tryptique = false;
+                    this.domes = false;
+                    this.baies = true;
+                    this.accueil = false;
+                    this.formulaire = false;
+
+                },
+                accueilPage() {
+                    this.tryptique = false;
+                    this.domes = false;
+                    this.baies = false;
+                    this.accueil = true;
+                    this.formulaire = false;
+
                 },
 
             },
@@ -119,6 +178,7 @@
     .object-fit {
         object-fit: contain;
     }
+
 </style>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
