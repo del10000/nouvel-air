@@ -47,6 +47,9 @@
         </div>
         <div>
             <div v-if="tryptiqueIsActive">volet tryptique du pare brise : {{ choixTryptique }}</div>
+            <div v-if="dome > 0">volet de dôme : {{ dome }}</div>
+            <div v-if="lanterneau > 0">volet de lanterneau : {{ lanterneau }}</div>
+            <div v-if="skydome > 0">volet de skydôme : {{ skydome }}</div>
             <div>C'est tout, merci ! Je génère mon devis</div>
         </div>
         <div v-show="tryptique">
@@ -77,8 +80,20 @@
         <div v-show="baies">
             PAGE BAIES
         </div>
-        <div v-show="domes">
-            PAGE DOMES
+        <div v-show="domes"class="row">
+            <div class="horsGabarit col text-center"  v-on:click="domeCompteur">
+                <img width="250" height="250" class="rounded-circle object-fit shadow" src="https://nouvelair-preprod.rouen-webmaster.com/wp-content/uploads/2021/07/dome-heki-3-plus.png" alt=""> <br>
+                Volet de dôme 
+            </div>
+            <div class="horsGabarit col text-center"  v-on:click="lanterneauCompteur">
+                <img width="250" height="250" class="rounded-circle object-fit shadow" src="https://nouvelair-preprod.rouen-webmaster.com/wp-content/uploads/2021/07/dome-mini-heki.png" alt=""> <br>
+                Volet de lanterneau
+            </div>
+            <div class="horsGabarit col text-center"  v-on:click="skydomeCompteur">
+                <img width="250" height="250" class="rounded-circle object-fit shadow" src="https://nouvelair-preprod.rouen-webmaster.com/wp-content/uploads/2021/06/skydome-partiellement-integre.png" alt=""> <br>
+                Volet de skydôme
+            </div>
+            
         </div>
         <div v-show="formulaire">
             FORMULAIRE RECAP
@@ -94,9 +109,16 @@
                 baies : false,
                 domes : false,
                 formulaire : false,
+
+                dome: 0,
+                lanterneau: 0,
+                skydome: 0,
+
+
                 type: [],
                 tryptiqueIsActive: false,
                 choixTryptique: []
+
             },
 
             methods: {
@@ -164,6 +186,15 @@
                     this.formulaire = false;
 
                 },
+                domeCompteur() {
+                    this.dome ++;
+                },
+                lanterneauCompteur() {
+                    this.lanterneau ++;
+                },
+                skydomeCompteur() {
+                    this.skydome = 1;
+                }
 
             },
             computed: {  
