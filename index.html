@@ -51,6 +51,12 @@
             <div v-if="skydome > 0">volet de skydôme : {{ skydome }}</div>
             <div>C'est tout, merci ! Je génère mon devis</div>
         </div>
+        <p v-if="errors.length">
+            <b>Please correct the following error(s):</b>
+            <ul>
+              <li v-for="error in errors">{{ error }}</li>
+            </ul>
+          </p>
         <div v-show="tryptique">
             <div  class="volets-tryptiques row my-5">
                 <div class="integral col text-center " v-on:click="integralCC">
@@ -94,14 +100,42 @@
             
         </div>
         <div v-show="formulaire">
-            FORMULAIRE RECAP
+            <form action="" id="app" v-on:submit="checkForm">
+                <p>
+                    <label for="lastname">Lastname</label>
+                    <input
+                      id="lastname"
+                      type="text"
+                      name="lastname"
+                    >
+                    <label for="firstname">Firstame</label>
+                    <input
+                      id="firstname"
+                      type="text"
+                      name="firstname"
+                    >
+                    <label for="firstname">E-mail</label>
+                    <input
+                      id="email"
+                      type="email"
+                      name="email"
+                      v-model="email"
+                    >
+                </p>
+                <p>
+                    <input
+                      type="submit"
+                      value="Submit"
+                    >
+                  </p>
+            </form>
         </div>
         <div>
             <div v-if="tryptiqueIsActive">volet tryptique du pare brise : {{ choixTryptique }}</div>
             <button v-on:click="tryptiquePage">Ajouter des tryptiques</button>
             <button v-on:click="baiesPage">Ajouter des baies</button>
             <button v-on:click="domesPage">Ajouter un dome</button>
-            <div>C'est tout, merci ! Je génère mon devis</div>
+            <button v-on:click="formPage">C'est tout, merci ! Je génère mon devis</button>
             <button v-on:click="accueilPage">Accueil</button>
         </div>
         
@@ -125,10 +159,13 @@
                 lanterneau: 0,
                 skydome: 0,
 
-
                 type: [],
                 tryptiqueIsActive: false,
-                choixTryptique: []
+                choixTryptique: [],
+
+                errors: [],
+                name: null,
+                email: null
 
             },
 
@@ -200,6 +237,14 @@
                     this.formulaire = false;
 
                 },
+                formPage() {
+                    this.tryptique = false;
+                    this.domes = false;
+                    this.baies = false;
+                    this.accueil = false;
+                    this.formulaire = true;
+
+                },
                 domeCompteur() {
                     this.dome ++;
                 },
@@ -208,6 +253,28 @@
                 },
                 skydomeCompteur() {
                     this.skydome = 1;
+                },
+                checkForm: function (e) {
+                    this.errors = [];
+
+                    if (!this.firstname) {
+                        this.errors.push("Name required.");
+                    }
+                    if (!this.email) {
+                        this.errors.push('Email required.');
+                    } else if (!this.validEmail(this.email)) {
+                        this.errors.push('Valid email required.');
+                    }
+
+                    if (!this.errors.length) {
+                        return true;
+                    }
+
+                    e.preventDefault();
+                },
+                validEmail: function (email) {
+                    var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                    return re.test(email);
                 }
 
             },
