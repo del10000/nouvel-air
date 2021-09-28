@@ -180,9 +180,9 @@
             </form>
         </div>
         <div>
-            <button v-on:click="tryptiquePage">Ajouter des tryptiques</button>
-            <button v-on:click="baiesPage">Ajouter des baies</button>
-            <button v-on:click="domesPage">Ajouter un dome</button>
+            <button v-on:click="tryptiquePage" v-show="buttonTryptique">Ajouter des tryptiques</button>
+            <button v-on:click="baiesPage" v-show="buttonBaie">Ajouter des baies</button>
+            <button v-on:click="domesPage" v-show="buttonDome">Ajouter un dome</button>
             <button v-on:click="formPage">C'est tout, merci ! Je génère mon devis</button>
             <button v-on:click="accueilPage">Accueil</button>
         </div>
@@ -200,9 +200,10 @@
                 domes : false,
                 formulaire : false,
 
-                buttonTryptique: false,
-                buttonBaie: false,
-                buttonDome: false,
+                buttonTryptique: true,
+                buttonBaie: true,
+                buttonDome: true,
+
                 dome: 0,
                 lanterneau: 0,
                 skydome: 0,
@@ -257,6 +258,15 @@
                     this.baies = false;
                     this.accueil = false;
                     this.formulaire = false;
+                    this.buttonTryptique = false;
+
+
+
+                    if(this.lanterneau !== 0 || this.dome !== 0 || this.skydome !== 0) {
+                        this.buttonDome = false;
+                    } else {
+                        this.buttonDome = true;
+                    }
 
                     console.log(this.choixTryptique.length)
                     if (this.choixTryptique.length < 1) {
@@ -272,9 +282,13 @@
                     this.accueil = false;
                     this.formulaire = false;
                     this.tryptiqueIsActive = false;
+                    this.buttonDome = false;
 
 
                     if(this.tryptiqueIsActive !== false) {
+                        this.buttonTryptique = true;
+                    }
+                    if(this.choixTryptique.length < 1) {
                         this.buttonTryptique = true;
                     }
 
@@ -286,8 +300,18 @@
                     this.accueil = false;
                     this.formulaire = false;
                     this.tryptiqueIsActive = false;
+                    this.buttonBaie = false;
 
-                    
+                    if(this.lanterneau !== 0 || this.dome !== 0 || this.skydome !== 0) {
+                        this.buttonDome = false;
+                    } else {
+                        this.buttonDome = true;
+                    }
+
+                    if(this.choixTryptique.length < 1) {
+                        this.buttonTryptique = true;
+                    }
+
                     if(this.tryptiqueIsActive !== false) {
                         this.buttonTryptique = true;
                     }
