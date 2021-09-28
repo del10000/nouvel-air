@@ -8,38 +8,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body>
+<body class="backgroundApp">
    
 
-    <div id="app" >
+    <div id="app"  >
         <div v-show="accueil">
             <h1 class="my-4 text-center">Démarrez votre devis</h1>
             <h2 class="my-4 text-center">Laissez-vous guider, votre devis en quelques secondes</h2>
-            <div class="d-flex justify-content-around align-items-center">
-                <div class="card w-25 shadow" >
-                    <img class="card-img-top" src="https://nouvelair-preprod.rouen-webmaster.com/wp-content/themes/essentials-child/devis-front/img/image-devis-volets-triptyque.png" alt="Card image cap">
+            <div class="d-flex justify-content-around align-items-center width90 mt-5">
+                <div class="card w-25 shadow rounded grow" >
+                    <img class="card-img-top p-2" src="https://nouvelair-preprod.rouen-webmaster.com/wp-content/themes/essentials-child/devis-front/img/image-devis-volets-triptyque.png" alt="Card image cap">
                     <div class="card-body">
-                      <h5 class="card-title">Volets tryptiques</h5>
-                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                      <a href="#" class="btn btn-primary" v-on:click="tryptiquePage">Choisir mes volets tryptiques</a>
+                      <h5 class="card-title d-flex justify-content-center">Volets tryptiques de pare-brise</h5>
+                      <p class="card-text d-flex justify-content-center">Sélectionnez un volet tryptique de pare-brise en fonction de votre camping-car</p>
+                      <a href="#" class="btn btn-primary d-flex justify-content-center" v-on:click="tryptiquePage">Choisir mes volets tryptiques</a>
                     </div>
                 </div>
 
-                <div class="card w-25">
-                    <img class="card-img-top" src="https://nouvelair-preprod.rouen-webmaster.com/wp-content/themes/essentials-child/devis-front/img/image-devis-volets-de-baies.png" alt="Card image cap">
+                <div class="card w-25 shadow rounded grow">
+                    <img class="card-img-top p-2" src="https://nouvelair-preprod.rouen-webmaster.com/wp-content/themes/essentials-child/devis-front/img/image-devis-volets-de-baies.png" alt="Card image cap">
                     <div class="card-body">
-                      <h5 class="card-title">Card title</h5>
-                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                      <a href="#" class="btn btn-primary" v-on:click="baiesPage">Go somewhere</a>
+                      <h5 class="card-title d-flex justify-content-center">Volets de baie</h5>
+                      <p class="card-text d-flex justify-content-center">Renseignez les différentes dimensions de vos baies de camping-car</p>
+                      <a href="#" class="btn btn-primary d-flex justify-content-center" v-on:click="baiesPage">Je souhaite des volets de baies</a>
                     </div>
                 </div>
 
-                <div class="card w-25">
-                    <img class="card-img-top" src="https://nouvelair-preprod.rouen-webmaster.com/wp-content/themes/essentials-child/devis-front/img/image-devis-volets-de-domes.png" alt="Card image cap">
+                <div class="card w-25 shadow rounded grow">
+                    <img class="card-img-top p-2" src="https://nouvelair-preprod.rouen-webmaster.com/wp-content/themes/essentials-child/devis-front/img/image-devis-volets-de-domes.png" alt="Card image cap">
                     <div class="card-body">
-                      <h5 class="card-title">Card title</h5>
-                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                      <a href="#" class="btn btn-primary" v-on:click="domesPage">Go somewhere</a>
+                      <h5 class="card-title d-flex justify-content-center">Volets de dômes</h5>
+                      <p class="card-text d-flex justify-content-center">Renseignez les quantités des différents dômes, lanterneaux et skydôme de votre camping-car</p>
+                      <a href="#" class="btn btn-primary d-flex justify-content-center"  v-on:click="domesPage">Je shouaite des volets de dômes</a>
                     </div>
                 </div>
             </div>
@@ -65,26 +65,28 @@
             </ul>
           </p>
         <div v-show="tryptique">
-            <div  class="volets-tryptiques row my-5">
+            <div  class="volets-tryptiques row my-5 width90">
                 <div class="integral col text-center " v-on:click="integralCC">
-                    <img src="https://nouvelair-preprod.rouen-webmaster.com/wp-content/uploads/2021/06/integral.jpg" width="250" height="250" class="rounded-circle object-fit shadow" alt=""> <br>
-                    Integral
+                    <h4 class="colorType">Integral</h4>
+                    <img src="https://nouvelair-preprod.rouen-webmaster.com/wp-content/uploads/2021/06/integral.jpg" width="250" height="250" style="background-color:white;" class="rounded-circle object-fit shadow" alt=""> <br>
+                    
                 </div>
                 <div class="profile col text-center "  v-on:click="profileCC">
-                    <img src="https://nouvelair-preprod.rouen-webmaster.com/wp-content/uploads/2021/06/profile.jpg" width="250" height="250" class="rounded-circle object-fit shadow" alt=""><br>
-                    profile
+                    <h4 class="colorType">Profile</h4>
+                    <img src="https://nouvelair-preprod.rouen-webmaster.com/wp-content/uploads/2021/06/profile.jpg" width="250" height="250" style="background-color:white;" class="rounded-circle object-fit shadow" alt=""><br>
                 </div>
                 <div class="capucine col text-center "  v-on:click="capucineCC">
-                    <img src="https://nouvelair-preprod.rouen-webmaster.com/wp-content/uploads/2021/06/capucine.jpg" width="250" height="250" class="rounded-circle object-fit shadow" alt=""><br>
-                    capucine
+                    <h4 class="colorType">Capucine</h4>
+                    <img src="https://nouvelair-preprod.rouen-webmaster.com/wp-content/uploads/2021/06/capucine.jpg" width="250" height="250" style="background-color:white;" class="rounded-circle object-fit shadow" alt=""><br>
+                    
                 </div>
                 <div class="fourgon col text-center "  v-on:click="fourgonCC">
-                    <img src="https://nouvelair-preprod.rouen-webmaster.com/wp-content/uploads/2021/06/fourgon.jpg" width="250" height="250" class="rounded-circle object-fit shadow" alt=""><br>
-                    fourgon
+                    <h4 class="colorType">Fourgon</h4>
+                    <img src="https://nouvelair-preprod.rouen-webmaster.com/wp-content/uploads/2021/06/fourgon.jpg" width="250" height="250" style="background-color:white;" class="rounded-circle object-fit shadow" alt=""><br>
                 </div>
                 <div class="horsGabarit col text-center"  v-on:click="horsGabaritCC">
-                    <img width="250" height="250" class="rounded-circle object-fit shadow" src="data:image/jpeg;base64,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" alt="">
-                    horsGabarit
+                    <h4 class="colorType">Hors-gabarit</h4>
+                    <img width="250" height="250" style="background-color:white;" class="rounded-circle object-fit shadow" src="https://motorhometrips.com.br/wp-content/uploads/2017/05/classe-a_375x250.png">
                 </div>
             </div>
         </div>
@@ -204,15 +206,15 @@
                       type="submit"
                       value="Submit"
                     >
-                  </p>
+                </p>
             </form>
         </div>
         <div>
-            <button v-on:click="tryptiquePage" v-show="buttonTryptique">Ajouter des tryptiques</button>
-            <button v-on:click="baiesPage" v-show="buttonBaie">Ajouter des baies</button>
-            <button v-on:click="domesPage" v-show="buttonDome">Ajouter un dome</button>
-            <button v-on:click="formPage">C'est tout, merci ! Je génère mon devis</button>
-            <button v-on:click="accueilPage">Accueil</button>
+            <button class="buttonMenu btn btn-primary" v-on:click="tryptiquePage" v-show="buttonTryptique">Ajouter des tryptiques</button>
+            <button class="buttonMenu btn btn-primary" v-on:click="baiesPage" v-show="buttonBaie">Ajouter des baies</button>
+            <button class="buttonMenu btn btn-primary" v-on:click="domesPage" v-show="buttonDome">Ajouter un dome</button>
+            <button class="btn btn-primary" v-on:click="formPage">C'est tout, merci ! Je génère mon devis</button>
+            <button class="btn btn-primary" v-on:click="accueilPage">Accueil</button>
         </div>
         
         
@@ -406,6 +408,35 @@
     .object-fit {
         object-fit: contain;
     }
+    .colorType{
+        color:rgb(68, 68, 68);
+    }
+    .width90{
+        width:90%;
+        margin-left:auto;
+        margin-right:auto;
+    }
+    .width80{
+        width:80%;
+        margin-left:auto;
+        margin-right:auto;
+    }
+    .backgroundApp{
+        background-color:rgb(233, 235, 241);
+    }
+    .grow:hover{
+        background-color:rgb(244, 247, 248);
+    }
+    /* .buttonMenu{
+        background-color:rgb(46, 107, 177);
+        width:100px;
+        height:20px;
+        color:white;
+        padding:10px;
+        margin:20px;
+        font-weight:bold;
+        border-radius:5px;
+    } */
 
 </style>
 
