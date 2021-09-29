@@ -11,12 +11,12 @@
 <body class="backgroundApp">
    
 
-    <div id="app"  >
+    <div id="app" class="d-flex" >
         <div v-show="accueil">
             <h1 class="my-4 text-center">Démarrez votre devis</h1>
-            <h2 class="my-4 text-center">Laissez-vous guider, votre devis en quelques secondes</h2>
+            <h2 class="my-4 text-center">Laissez-vous guider, obtenez votre devis en quelques secondes</h2>
             <div class="d-flex justify-content-around align-items-center width90 mt-5">
-                <div class="card w-25 shadow rounded grow" >
+                <div class="card w-25 shadow rounded grow backgroundCard" >
                     <img class="card-img-top p-2" src="https://nouvelair-preprod.rouen-webmaster.com/wp-content/themes/essentials-child/devis-front/img/image-devis-volets-triptyque.png" alt="Card image cap">
                     <div class="card-body">
                       <h5 class="card-title d-flex justify-content-center">Volets tryptiques de pare-brise</h5>
@@ -25,7 +25,7 @@
                     </div>
                 </div>
 
-                <div class="card w-25 shadow rounded grow">
+                <div class="card w-25 shadow rounded grow backgroundCard">
                     <img class="card-img-top p-2" src="https://nouvelair-preprod.rouen-webmaster.com/wp-content/themes/essentials-child/devis-front/img/image-devis-volets-de-baies.png" alt="Card image cap">
                     <div class="card-body">
                       <h5 class="card-title d-flex justify-content-center">Volets de baie</h5>
@@ -34,7 +34,7 @@
                     </div>
                 </div>
 
-                <div class="card w-25 shadow rounded grow">
+                <div class="card w-25 shadow rounded grow backgroundCard">
                     <img class="card-img-top p-2" src="https://nouvelair-preprod.rouen-webmaster.com/wp-content/themes/essentials-child/devis-front/img/image-devis-volets-de-domes.png" alt="Card image cap">
                     <div class="card-body">
                       <h5 class="card-title d-flex justify-content-center">Volets de dômes</h5>
@@ -61,18 +61,17 @@
                 Volet de skydôme
             </div>
         </div>
-        <p v-if="errors.length">
+        <!-- <p v-if="errors.length">
             <b>Please correct the following error(s):</b>
             <ul>
               <li v-for="error in errors">{{ error }}</li>
             </ul>
-          </p>
+          </p> -->
         <div v-show="tryptique">
             <div  class="volets-tryptiques row my-5 width90">
                 <div class="integral col text-center " v-on:click="integralCC">
                     <h4 class="colorType">Integral</h4>
-                    <img src="https://nouvelair-preprod.rouen-webmaster.com/wp-content/uploads/2021/06/integral.jpg" width="250" height="250" style="background-color:white;" class="rounded-circle object-fit shadow" alt=""> <br>
-                    
+                    <img src="https://nouvelair-preprod.rouen-webmaster.com/wp-content/uploads/2021/06/integral.jpg" width="250" height="250" style="background-color:white;" class="rounded-circle object-fit shadow" alt=""> <br>             
                 </div>
                 <div class="profile col text-center "  v-on:click="profileCC">
                     <h4 class="colorType">Profile</h4>
@@ -153,14 +152,6 @@
                 </div>
             </div>
         </div>
-        <div>
-            <div v-if="tryptiqueIsActive">volet tryptique du pare brise : {{ choixTryptique }}</div>
-            <div v-if="dome > 0">volet de dôme : {{ dome }}</div>
-            <div v-if="lanterneau > 0">volet de lanterneau : {{ lanterneau }}</div>
-            <div v-if="skydome > 0">volet de skydôme : {{ skydome }}</div>
-        </div>
-        
-        <!-- passer le formulaire en bootstrap -->
         <div v-show="formulaire" class="widthFormulaire">
             <form action="" id="app" v-on:submit="checkForm">
                 <div class="form-row">
@@ -207,23 +198,22 @@
                     <label for="exampleFormControlTextarea1">Précisez votre demande</label>
                     <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                   </div>
-                  <button type="submit" class="btn btn-primary">Submit</button>
-
-
-
-
-
-
-                
-                
+                  <button type="submit" class="btn btn-primary">Submit</button>                             
             </form>
         </div>
-        <div class="backgroundButton">
+        <div class="backgroundButton" v-show="menuButtons">
+            <img src="img/logo1.png">
             <button class="buttonMenu btn btn-primary" v-on:click="tryptiquePage" v-show="buttonTryptique">Ajouter des tryptiques</button>
             <button class="buttonMenu btn btn-primary" v-on:click="baiesPage" v-show="buttonBaie">Ajouter des baies</button>
             <button class="buttonMenu btn btn-primary" v-on:click="domesPage" v-show="buttonDome">Ajouter un dome</button>
             <button class="btn btn-primary" v-on:click="formPage">C'est tout, merci ! Je génère mon devis</button>
             <button class="btn btn-primary" v-on:click="accueilPage">Accueil</button>
+            <div>
+                <div v-if="tryptiqueIsActive">volet tryptique du pare brise : {{ choixTryptique }}</div>
+                <div v-if="dome > 0">volet de dôme : {{ dome }}</div>
+                <div v-if="lanterneau > 0">volet de lanterneau : {{ lanterneau }}</div>
+                <div v-if="skydome > 0">volet de skydôme : {{ skydome }}</div>
+            </div>
         </div>
         
         
@@ -260,7 +250,9 @@
                 newBaies: {
                     longueur: '',
                     largeur: ''
-                }
+                },
+
+                menuButtons: false,
 
             },
 
@@ -308,7 +300,7 @@
                     this.accueil = false;
                     this.formulaire = false;
                     this.buttonTryptique = false;
-
+                    this.menuButtons = true;
 
 
                     if(this.lanterneau !== 0 || this.dome !== 0 || this.skydome !== 0) {
@@ -332,6 +324,7 @@
                     this.formulaire = false;
                     this.tryptiqueIsActive = false;
                     this.buttonDome = false;
+                    this.menuButtons = true;
 
 
                     if(this.tryptiqueIsActive !== false) {
@@ -350,6 +343,8 @@
                     this.formulaire = false;
                     this.tryptiqueIsActive = false;
                     this.buttonBaie = false;
+                    this.menuButtons = true;
+
 
                     if(this.lanterneau !== 0 || this.dome !== 0 || this.skydome !== 0) {
                         this.buttonDome = false;
@@ -371,6 +366,7 @@
                     this.baies = false;
                     this.accueil = true;
                     this.formulaire = false;
+                    this.menuButtons = false;
 
                 },
                 formPage() {
@@ -441,15 +437,12 @@
         margin-right:auto;
     }
     .widthFormulaire{
-        width:60%;
+        width:40%;
         margin-left:auto;
         margin-right:auto;
-    }
-    .backgroundApp{
-        /* background-color:rgb(233, 235, 241); */
-        /* background-image: url("https://www.wallpapertip.com/wmimgs/35-351220_motorhome-hd.jpg"); */
         
     }
+    
     .grow:hover{
         background-color:rgb(244, 247, 248);
     }
@@ -457,19 +450,13 @@
         background-color:white;
         border: solid 1px rgb(192, 192, 192);
         border-radius:5px;
-        width:50%;
+        
         padding:50px;
     }
-    /* .buttonMenu{
-        background-color:rgb(46, 107, 177);
-        width:100px;
-        height:20px;
-        color:white;
-        padding:10px;
-        margin:20px;
-        font-weight:bold;
-        border-radius:5px;
-    } */
+    .backgroundCard{
+        background-color:rgb(241, 246, 247);
+    }
+    
 
 </style>
 
