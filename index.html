@@ -10,7 +10,6 @@
 </head>
 <body class="backgroundApp">
     
-
     <div id="app" class="d-flex row" >
         <div v-show="accueil">
             <div>
@@ -176,8 +175,7 @@
                 </div>
             </div>
         </div>
-        
-        
+            
     </div>
 
     <script>
@@ -206,32 +204,27 @@
                 errors: [],
                 firstname: null,
                 email: null,
-
-                tableaux: [],
                 
-                addBaies: 7,
                 dimensionBaies: [],
 
                 menuButtons: false,
                 tryptiquesApi: [],
                 domesApi: [],
-               
-
             },
 
             methods: {
                 addItem: function () {
-                    this.dimensionBaies.id++
-                    console.log(this.dimensionBaies.id)
-                },
-                addType() {
-                    console.log(this.type)
+                    this.dimensionBaies.push({
+                        longueur: '',
+                        hauteur: '',
+                    })
                 },
                 chooseCC(item) {
                     this.type = item.fields.nom
                     this.tryptiqueIsActive = true;
-                    this.choixTryptique = item.fields.nom
+                    
                 },
+                
                 tryptiquePage() {
                     this.tryptique = true;
                     this.domes = false;
@@ -357,10 +350,6 @@
                     .then((response) => response.json()) 
                     .then(data => (this.domesApi = data));          
                 },
-    
-                // getImage(item) {
-                //     return require(item.fields.images);
-                // }
 
                 createBaiesArray(){
                     for (let i = 0; i < 8; i++){
@@ -384,7 +373,6 @@
 </body>
 
 </html>
-
 
 <style>
     .object-fit {
