@@ -69,7 +69,20 @@
                 <h3 >Je renseigne les quantités et les différentes dimensions</h3>
             </div>
             <div class="d-flex mt-5">
-                
+                <div style="background-color:red;">
+                    <div class="d-flex" v-for="(baie, index) in dimensionBaies">
+                        <span>Baie {{index+1}} L </span>
+                        <input @keypress.enter="pushInput()" v-model="baie.longueur" style="width:80px;height:20px;">
+                        <span>cm x H</span>
+                        <input @keypress.enter="pushInput()" v-model="baie.hauteur" style="width:80px;height:20px;">
+                        <span>cm</span>
+                    </div>
+                    <button v-on:click="addItem">Ajouter</button>
+                    <button @click="pushInput()">Entrer</button>
+                    <ul>
+                        <li v-for="(dimension, index) in dimensionBaies" >L={{dimension.longueur}} {{index}} h={{dimension.hauteur}}</li>
+                    </ul>
+                </div>
             </div>
         </div>
         <div v-show="formulaire" class="widthFormulaire col-sm-8">
@@ -206,13 +219,9 @@
             },
 
             methods: {
-                consoleTest: function() {
-                    console.log("test")
-                    console.log(this.dimensionBaies)
-                },
-                addItem() {
-                    this.addBaies ++
-                    console.log(this.addBaies)
+                addItem: function () {
+                    this.dimensionBaies.id++
+                    console.log(this.dimensionBaies.id)
                 },
                 addType() {
                     console.log(this.type)
@@ -378,6 +387,14 @@
                 //     return require(item.fields.images);
                 // }
 
+                createBaiesArray(){
+                    for (let i = 0; i < 8; i++){
+                        this.dimensionBaies.push({
+                            longueur: '',
+                            hauteur: '',
+                        })
+                    };
+                }
             },
             computed: {  
                
@@ -385,6 +402,7 @@
             created: function () {
                 this.axiosGetTryptique()
                 this.axiosGetDomes()
+                this.createBaiesArray()
             }
         })
     </script>
