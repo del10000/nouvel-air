@@ -42,6 +42,9 @@
                       <a href="#" class="btn btn-primary d-flex justify-content-center"  v-on:click="domesPage">Je shouaite des volets de dômes</a>
                     </div>
                 </div>
+                <div>
+                    <img style="width:100%;height:100%;object-fit: cover;position:fixed;top:0;left:0;z-index:-1;" src="https://www.hymer.com/hymer/website-assets/1.produktseiten/b-ml-i/image-thumb__9165__stage-background-hymer_auto_c8bcce7d8a475101e8b8c144c7aa27f0/pa_2019-blavand-sonderside-hymer-1295.jpg">
+                </div>
             </div>
         </div>
         <div v-show="domes"class="row width90">
@@ -149,64 +152,62 @@
             <div v-if="skydome > 0">volet de skydôme : {{ skydome }}</div>
         </div>
         
-        
-        <div v-show="formulaire">
+        <!-- passer le formulaire en bootstrap -->
+        <div v-show="formulaire" class="widthFormulaire">
             <form action="" id="app" v-on:submit="checkForm">
-                <p>
-                    <label for="lastname">Lastname</label>
-                    <input
-                      id="lastname"
-                      type="text"
-                      name="lastname"
-                    > <br>
-                    <label for="firstname">Firstame</label>
-                    <input
-                      id="firstname"
-                      type="text"
-                      name="firstname"
-                      v-model="firstname"
-                    > <br>
-                    <label for="email">E-mail</label>
-                    <input
-                      id="email"
-                      type="email"
-                      name="email"
-                      v-model="email"
-                    > <br>
-                    <label for="telephone">Téléphone</label>
-                    <input
-                      id="telephone"
-                      type="telephone"
-                      name="telephone"
-                      v-model="email"
-                    > <br>
-                    <label for="marque">Marque de camping-car</label>
-                    <input
-                      id="marque"
-                      type="marque"
-                      name="marque"
-                    > <br>
-                    <label for="modele">Modèle du camping-car</label>
-                    <input
-                      id="modele"
-                      type="modele"
-                      name="modele"
-                      v-model="modele"
-                    > <br>
-                    <label for="type">Type du camping-car</label>
-                    <input
-                      id="type"
-                      type="type"
-                      name="type"
-                      v-model="type"
-                    >
-                </p>
-                <p>
-                    <input
-                      type="submit"
-                      value="Submit"
-                    >
-                </p>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="inputEmail4">Nom*</label>
+                      <input type="email" class="form-control" id="inputEmail4" placeholder="Nom">
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="inputPassword4">Prénom*</label>
+                      <input type="password" class="form-control" id="inputPassword4" placeholder="Prénom">
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="inputEmail4">Adresse email*</label>
+                      <input type="email" class="form-control" id="inputEmail4" placeholder="Votre adresse email">
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="inputPassword4">Téléphone*</label>
+                      <input type="password" class="form-control" id="inputPassword4" placeholder="00 00 00 00 00">
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-4">
+                      <label for="inputEmail4">Marque de camping-car</label>
+                      <input type="email" class="form-control" id="inputEmail4" placeholder="Marque du camping-car">
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label for="inputPassword4">Modèle de camping-car</label>
+                      <input type="password" class="form-control" id="inputPassword4" placeholder="Modèle du camping-car">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="exampleFormControlSelect1">Type de camping-car</label>
+                        <select class="form-control" id="exampleFormControlSelect1">
+                            <option>Intégral</option>
+                            <option>Profilé</option>
+                            <option>Capucine</option>
+                            <option>Fourgon</option>
+                            <option>Hors-gabarit</option>
+                        </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlTextarea1">Précisez votre demande</label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Submit</button>
+
+
+
+
+
+
+                
+                
             </form>
         </div>
         <div class="backgroundButton">
@@ -421,8 +422,15 @@
         margin-left:auto;
         margin-right:auto;
     }
+    .widthFormulaire{
+        width:60%;
+        margin-left:auto;
+        margin-right:auto;
+    }
     .backgroundApp{
-        background-color:rgb(233, 235, 241);
+        /* background-color:rgb(233, 235, 241); */
+        /* background-image: url("https://www.wallpapertip.com/wmimgs/35-351220_motorhome-hd.jpg"); */
+        
     }
     .grow:hover{
         background-color:rgb(244, 247, 248);
