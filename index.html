@@ -10,7 +10,6 @@
 </head>
 <body class="backgroundApp">
     
-
     <div id="app" class="d-flex row" >
         <div v-show="accueil">
             <div>
@@ -53,8 +52,7 @@
                 <div><h4 style="color:rgb(56, 56, 56);">{{item.fields.nom}}</h4></div>
             </div>
         </div>
-        
-        
+             
         <div v-show="tryptique" class="col-sm-8">
             <div  class="volets-tryptiques row my-5 width90">
                 <div class="integral col text-center " v-on:click="integralCC(item.fields.nom)" v-for="item in tryptiquesApi">
@@ -148,8 +146,7 @@
                 <div v-if="skydome > 0">volet de skydôme : {{ skydome }}</div>
             </div>
         </div>
-        
-        
+            
     </div>
 
     <script>
@@ -178,56 +175,22 @@
                 errors: [],
                 firstname: null,
                 email: null,
-
-                tableaux: [],
                 
-                addBaies: 7,
-                dimensionBaies: [
-                    {
-                    longueur: '',
-                    hauteur: '',
-                    },
-                    {
-                    longueur: '',
-                    hauteur: '',
-                    },
-                    {
-                    longueur: '',
-                    hauteur: '',
-                    },
-                ],
-                itemsEx: [
-                    {
-                        foo: 'something',
-                        number: 60
-                    },
-                    {
-                        foo: '',
-                        number: '',
-                    },
-                    {
-                        foo: 'text',
-                        number: 20,
-                    }
-                ],
+                dimensionBaies: [],
 
                 menuButtons: false,
                 tryptiquesApi: [],
                 domesApi: [],
-               
-
             },
 
             methods: {
                 addItem: function () {
-                    this.dimensionBaies.id++
-                    console.log(this.dimensionBaies.id)
-                },
-                addType() {
-                    console.log(this.type)
+                    this.dimensionBaies.push({
+                        longueur: '',
+                        hauteur: '',
+                    })
                 },
                 integralCC(item) {
-                    console.log(item.fields.nom)
                     this.type= []
                     this.type.push("integral");
                     this.tryptiqueIsActive = true;
@@ -382,10 +345,6 @@
                     .then((response) => response.json()) 
                     .then(data => (this.domesApi = data));          
                 },
-    
-                // getImage(item) {
-                //     return require(item.fields.images);
-                // }
 
                 createBaiesArray(){
                     for (let i = 0; i < 8; i++){
@@ -409,7 +368,6 @@
 </body>
 
 </html>
-
 
 <style>
     .object-fit {
