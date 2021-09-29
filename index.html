@@ -47,7 +47,7 @@
             </div>
         </div>
 
-        <div v-show="domes"class="row width90 col-sm-8">
+        <div v-show="domes"class="row width90 col-md-8">
             <div class="horsGabarit col text-center"  v-on:click="domeCompteur" v-for="item in domesApi">
                 <img style="background-color:rgb(202, 202, 202);" width="250" height="250" class="rounded-circle object-fit shadow" :src="item.fields.images.image" alt=""> <br>
                 <div><h4 style="color:rgb(56, 56, 56);">{{item.fields.nom}}</h4></div>
@@ -55,16 +55,16 @@
         </div>
         
         
-        <div v-show="tryptique" class="col-sm-8">
+        <div v-show="tryptique" class="col-md-8">
             <div  class="volets-tryptiques row my-5 width90">
-                <div class="integral col text-center " v-on:click="integralCC(item.fields.nom)" v-for="item in tryptiquesApi">
+                <div class="integral col text-center " v-on:click="chooseCC(item)" v-for="item in tryptiquesApi">
                     <h4 class="colorType">{{item.fields.nom}}</h4>
                     <img :src="item.fields.images.image" width="250" height="250" style="background-color:white;" class="rounded-circle object-fit shadow" alt=""> <br>             
                 </div>
             </div>
         </div>
 
-        <div v-show="baies" class="col-sm-8">
+        <div v-show="baies" class="col-md-8">
             <div class="d-flex justify-content-center">
                 <h3 >Je renseigne les quantités et les différentes dimensions</h3>
             </div>
@@ -85,7 +85,7 @@
                 </div>
             </div>
         </div>
-        <div v-show="formulaire" class="widthFormulaire col-sm-8">
+        <div v-show="formulaire" class="widthFormulaire col-md-8">
             <form action="" id="app" v-on:submit="checkForm">
                 <div class="form-row">
                     <div class="form-group col-md-6">
@@ -134,18 +134,46 @@
                   <button type="submit" class="btn btn-primary">Submit</button>                             
             </form>
         </div>
-        <div class="backgroundButton col-sm-4" v-show="menuButtons">
-            <img src="img/logo1.png">
-            <button class="buttonMenu btn btn-primary" v-on:click="tryptiquePage" v-show="buttonTryptique">Ajouter des tryptiques</button>
-            <button class="buttonMenu btn btn-primary" v-on:click="baiesPage" v-show="buttonBaie">Ajouter des baies</button>
-            <button class="buttonMenu btn btn-primary" v-on:click="domesPage" v-show="buttonDome">Ajouter un dome</button>
-            <button class="btn btn-primary" v-on:click="formPage">C'est tout, merci ! Je génère mon devis</button>
-            <button class="btn btn-primary" v-on:click="accueilPage">Accueil</button>
+        <div class="backgroundButton col-md-4" v-show="menuButtons">
             <div>
-                <div v-if="tryptiqueIsActive">volet tryptique du pare brise : {{ choixTryptique }}</div>
-                <div v-if="dome > 0">volet de dôme : {{ dome }}</div>
-                <div v-if="lanterneau > 0">volet de lanterneau : {{ lanterneau }}</div>
-                <div v-if="skydome > 0">volet de skydôme : {{ skydome }}</div>
+                <img src="img/logo1.png">
+                <button class="buttonMenu btn btn-primary" v-on:click="tryptiquePage" v-show="buttonTryptique">Ajouter des tryptiques</button>
+                <button class="buttonMenu btn btn-primary" v-on:click="baiesPage" v-show="buttonBaie">Ajouter des baies</button>
+                <button class="buttonMenu btn btn-primary" v-on:click="domesPage" v-show="buttonDome">Ajouter un dome</button>
+                <button class="btn btn-primary" v-on:click="formPage">C'est tout, merci ! Je génère mon devis</button>
+                <button class="btn btn-primary" v-on:click="accueilPage">Accueil</button>
+                <div>
+                    <div v-if="tryptiqueIsActive">volet tryptique du pare brise : {{ choixTryptique }}</div>
+                    <div v-if="dome > 0">volet de dôme : {{ dome }}</div>
+                    <div v-if="lanterneau > 0">volet de lanterneau : {{ lanterneau }}</div>
+                    <div v-if="skydome > 0">volet de skydôme : {{ skydome }}</div>
+                </div>
+            </div>
+            <div>
+                <img src="img/logo1.png">
+                <button class="buttonMenu btn btn-primary" v-on:click="tryptiquePage" v-show="buttonTryptique">Ajouter des tryptiques</button>
+                <button class="buttonMenu btn btn-primary" v-on:click="baiesPage" v-show="buttonBaie">Ajouter des baies</button>
+                <button class="buttonMenu btn btn-primary" v-on:click="domesPage" v-show="buttonDome">Ajouter un dome</button>
+                <button class="btn btn-primary" v-on:click="formPage">C'est tout, merci ! Je génère mon devis</button>
+                <button class="btn btn-primary" v-on:click="accueilPage">Accueil</button>
+                <div class="d-flex">
+                    <div v-if="tryptiqueIsActive">volet tryptique du pare brise : 
+                    <span>
+                        <label for="exampleFormControlSelect1">Type de camping-car</label>
+                        <select class="form-control" id="exampleFormControlSelect1">
+                            <option>Intégral</option>
+                            <option>Profilé</option>
+                            <option>Capucine</option>
+                            <option>Fourgon</option>
+                            <option>Hors-gabarit</option>
+                        </select>
+                    </span>
+                    </div>
+
+                    <div v-if="dome > 0">volet de dôme : {{ dome }}</div>
+                    <div v-if="lanterneau > 0">volet de lanterneau : {{ lanterneau }}</div>
+                    <div v-if="skydome > 0">volet de skydôme : {{ skydome }}</div>
+                </div>
             </div>
         </div>
         
@@ -182,34 +210,7 @@
                 tableaux: [],
                 
                 addBaies: 7,
-                dimensionBaies: [
-                    {
-                    longueur: '',
-                    hauteur: '',
-                    },
-                    {
-                    longueur: '',
-                    hauteur: '',
-                    },
-                    {
-                    longueur: '',
-                    hauteur: '',
-                    },
-                ],
-                itemsEx: [
-                    {
-                        foo: 'something',
-                        number: 60
-                    },
-                    {
-                        foo: '',
-                        number: '',
-                    },
-                    {
-                        foo: 'text',
-                        number: 20,
-                    }
-                ],
+                dimensionBaies: [],
 
                 menuButtons: false,
                 tryptiquesApi: [],
@@ -226,36 +227,10 @@
                 addType() {
                     console.log(this.type)
                 },
-                integralCC(item) {
-                    console.log(item.fields.nom)
-                    this.type= []
-                    this.type.push("integral");
+                chooseCC(item) {
+                    this.type = item.fields.nom
                     this.tryptiqueIsActive = true;
-                    this.choixTryptique = "INTEGRAL"
-                },
-                capucineCC() {
-                    this.type = []
-                    this.type.push("capucine")
-                    this.tryptiqueIsActive = true;
-                    this.choixTryptique = "CAPUCINE"
-                },
-                fourgonCC() {
-                    this.type = []
-                    this.type.push("fourgon")
-                    this.tryptiqueIsActive = true;
-                    this.choixTryptique = "FOURGON"
-                },
-                profileCC() {
-                    this.type = []
-                    this.type.push("profile")
-                    this.tryptiqueIsActive = true;
-                    this.choixTryptique = "PROFILE"
-                },
-                horsGabaritCC() {
-                    this.type = []
-                    this.type.push("horsGabarit")
-                    this.tryptiqueIsActive = true;
-                    this.choixTryptique = "HORSGABARIT"
+                    this.choixTryptique = item.fields.nom
                 },
                 tryptiquePage() {
                     this.tryptique = true;
