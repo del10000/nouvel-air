@@ -67,17 +67,17 @@
             <div class="d-flex justify-content-center">
                 <h3 >Je renseigne les quantités et les différentes dimensions</h3>
             </div>
-            <div class="d-flex mt-5">
-                <div style="background-color:red;">
-                    <div class="d-flex" v-for="(baie, index) in dimensionBaies">
-                        <span>Baie {{index+1}} L </span>
-                        <input @keypress.enter="pushInput()" v-model="baie.longueur" style="width:80px;height:20px;">
-                        <span>cm x H</span>
-                        <input @keypress.enter="pushInput()" v-model="baie.hauteur" style="width:80px;height:20px;">
-                        <span>cm</span>
+            <div class="d-flex justify-content-center mt-5">
+                <div>
+                    <div class="d-flex form-group" v-for="(baie, index) in dimensionBaies">
+                        <span>Baie {{index+1}} L &nbsp;</span>
+                        <input @keypress.enter="pushInput()" id="input1" class="h-100 col-4" v-model="baie.longueur">
+                        <span>&nbsp;cm x H&nbsp;</span>
+                        <input @keypress.enter="pushInput()" id="input2" class="h-100 col-4" v-model="baie.hauteur">
+                        <span>&nbsp;cm</span>
                     </div>
-                    <button v-on:click="addItem">Ajouter</button>
-                    <button @click="pushInput()">Entrer</button>
+                    <button class="btn btn-success" v-on:click="addItem">Ajouter</button>
+                    <button class="btn btn-primary" @click="pushInput()">Entrer</button>
                     <ul>
                         <li v-for="(dimension, index) in dimensionBaies" >L={{dimension.longueur}} {{index}} h={{dimension.hauteur}}</li>
                     </ul>
@@ -86,43 +86,45 @@
         </div>
         <div v-show="formulaire" class="widthFormulaire col-md-8">
             <form action="" id="app" v-on:submit="checkForm">
+                <p v-if="errors.length">
+                    <b>Please correct the following error(s):</b>
+                    <ul>
+                      <li v-for="error in errors">{{ error }}</li>
+                    </ul>
+                </p>
                 <div class="form-row">
                     <div class="form-group col-md-6">
                       <label for="inputEmail4">Nom*</label>
-                      <input type="email" class="form-control" id="inputEmail4" placeholder="Nom">
+                      <input type="text" v-model="firstname" class="form-control" id="inputEmail4" placeholder="Nom" required>
                     </div>
                     <div class="form-group col-md-6">
                       <label for="inputPassword4">Prénom*</label>
-                      <input type="password" class="form-control" id="inputPassword4" placeholder="Prénom">
+                      <input type="text" class="form-control" placeholder="Prénom" required>
                     </div>
                   </div>
                   <div class="form-row">
                     <div class="form-group col-md-6">
                       <label for="inputEmail4">Adresse email*</label>
-                      <input type="email" class="form-control" id="inputEmail4" placeholder="Votre adresse email">
+                      <input type="email" v-model="email" class="form-control" placeholder="Votre adresse email" required>
                     </div>
                     <div class="form-group col-md-6">
                       <label for="inputPassword4">Téléphone*</label>
-                      <input type="password" class="form-control" id="inputPassword4" placeholder="00 00 00 00 00">
+                      <input type="tel" pattern="[0-9]{10}" class="form-control" placeholder="00 00 00 00 00" required>
                     </div>
                   </div>
                   <div class="form-row">
                     <div class="form-group col-md-4">
                       <label for="inputEmail4">Marque de camping-car</label>
-                      <input type="email" class="form-control" id="inputEmail4" placeholder="Marque du camping-car">
+                      <input type="email" class="form-control" placeholder="Marque du camping-car">
                     </div>
                     <div class="form-group col-md-4">
                       <label for="inputPassword4">Modèle de camping-car</label>
-                      <input type="password" class="form-control" id="inputPassword4" placeholder="Modèle du camping-car">
+                      <input type="text" class="form-control" placeholder="Modèle du camping-car">
                     </div>
                     <div class="form-group col-md-4">
                         <label for="exampleFormControlSelect1">Type de camping-car</label>
                         <select class="form-control" id="exampleFormControlSelect1">
-                            <option>Intégral</option>
-                            <option>Profilé</option>
-                            <option>Capucine</option>
-                            <option>Fourgon</option>
-                            <option>Hors-gabarit</option>
+                            <option v-for="item in tryptiquesApi" v-on:click="chooseCC(item)" value="">{{item.fields.nom}}</option>
                         </select>
                     </div>
                   </div>
