@@ -77,7 +77,7 @@
                         <span>&nbsp;cm</span>
                     </div>
                    
-                    <button v-if="checkQtyItem" v-on:click="substractItem">Retirer</button>
+                    <button class="btn btn-success" v-if="checkQty" v-on:click="substractItem">Retirer</button>
                     
                     <button class="btn btn-success" v-on:click="addItem">Ajouter</button>
                     <button class="btn btn-primary" @click="pushInput()">Entrer</button>
@@ -152,9 +152,9 @@
                 </div>
                 <div v-for="(item, index) in testFunction">
 
+                    <span> Baie {{index+1}} = L {{ item.longueur }} x {{ item.hauteur }}cm</span>
 
-
-                   hauteur {{index+1}} {{ item.hauteur }} 
+                    
                 </div>
                 
             </div>
@@ -371,7 +371,7 @@
                 },
 
                 createBaiesArray() {
-                    for (let i = 0; i < 8; i++){
+                    for (let i = 0; i < 6; i++){
                         this.dimensionBaies.push({
                             longueur: '',
                             hauteur: '',
@@ -400,7 +400,7 @@
                     return baiesNotEmpty;
                 },
                 checkQty() {
-                    if (this.dimensionBaies.length < 9) {
+                    if (this.dimensionBaies.length < 7) {
                         return false;
                     } else {
                         return true;
