@@ -10,82 +10,146 @@
 </head>
 <body class="backgroundApp">
     
-    <div id="app" class="d-flex row" >
+    <div id="app" class="">
+
+        <div class="" v-show="menuButtons">
+            <div v-if="menuButtonsNormal">
+                <div class="d-flex justify-content-center">
+                    <img src="img/logo1.png" class="img-fluid">
+                </div>
+                <div class="d-flex justify-content-center">
+                    <button class="btn btn-primary" v-on:click="accueilPage">Accueil</button>&nbsp;
+                    <div v-show="buttonTryptique">
+                        <button class=" btn btn-primary" v-on:click="tryptiquePage">Ajouter des tryptiques</button>&nbsp;
+                    </div>
+                    <div v-show="buttonBaie">
+                        <button class=" btn btn-primary" v-on:click="baiesPage">Ajouter des baies</button>&nbsp;
+                    </div>
+                    <div v-show="buttonDome">
+                        <button class=" btn btn-primary" v-on:click="domesPage">Ajouter un dome</button>&nbsp;
+                    </div>
+                    <div>
+                        <button class="btn btn-primary" v-on:click="formPage">C'est tout, merci ! Je génère mon devis</button>
+                    </div>
+                  
+                    <div v-for="item in choixDomes">
+                        <div>
+                            {{item.name}}  {{item.quantity}}
+                        </div>                                     
+                    </div>
+                    
+                    <div>
+                        <div v-if="tryptiqueIsActive">volet tryptique du pare brise : {{ choixTryptique }}</div>
+                        <div v-if="dome > 0">volet de dôme : {{ dome }}</div>
+                        <div v-if="lanterneau > 0">volet de lanterneau : {{ lanterneau }}</div>
+                        <div v-if="skydome > 0">volet de skydôme : {{ skydome }}</div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <div v-for="(item, index) in testFunction">
+
+                        <span> Baie {{index+1}} = L {{ item.longueur }} x {{ item.hauteur }}cm</span>
+                    </div>
+                </div>
+                
+            </div>
+            <div v-else>
+                <img src="img/logo1.png">
+                <button class=" btn btn-primary" v-on:click="tryptiquePage" v-show="buttonTryptique">Ajouter des tryptiques</button>
+                <button class=" btn btn-primary" v-on:click="baiesPage" v-show="buttonBaie">Ajouter des baies</button>
+                <button class=" btn btn-primary" v-on:click="domesPage" v-show="buttonDome">Ajouter un dome</button>
+                <button class="btn btn-primary" v-on:click="formPage">C'est tout, merci ! Je génère mon devis</button>
+                <button class="btn btn-primary" v-on:click="accueilPage">Accueil</button>
+                <div class="d-flex">
+                    <div v-if="tryptiqueIsActive">volet tryptique du pare brise : 
+                    <span>
+                        <label for="exampleFormControlSelect1">Type de camping-car</label>
+                        <select class="form-control" id="exampleFormControlSelect1">
+                            <option v-for="item in tryptiquesApi" v-on:click="chooseCC(item)" value="">{{item.fields.nom}}</option>
+                        </select>
+                    </span>
+                    </div>
+                    
+
+                    <div v-if="dome > 0">volet de dôme : {{ dome }}</div>
+                    <div v-if="lanterneau > 0">volet de lanterneau : {{ lanterneau }}</div>
+                    <div v-if="skydome > 0">volet de skydôme : {{ skydome }}</div>
+                </div>
+            </div>
+        </div>
         <div v-show="accueil">
             <div>
                 <img style="width:100%;height:100%;object-fit: cover;position:fixed;top:0;left:0;z-index:-1;" src="https://www.hymer.com/hymer/website-assets/1.produktseiten/b-ml-i/image-thumb__9165__stage-background-hymer_auto_c8bcce7d8a475101e8b8c144c7aa27f0/pa_2019-blavand-sonderside-hymer-1295.jpg">
             </div>
             <h1 class="my-4 text-center">Démarrez votre devis</h1>
             <h2 class="my-4 text-center">Laissez-vous guider, obtenez votre devis en quelques secondes</h2>
-            <div class="d-flex justify-content-around align-items-center width90 mt-5">
-                <div class="card w-25 shadow rounded grow backgroundCard" >
-                    <img class="card-img-top p-2" src="https://nouvelair-preprod.rouen-webmaster.com/wp-content/themes/essentials-child/devis-front/img/image-devis-volets-triptyque.png" alt="Card image cap">
-                    <div class="card-body">
-                      <h5 class="card-title d-flex justify-content-center">Volets tryptiques de pare-brise</h5>
-                      <p class="card-text d-flex justify-content-center">Sélectionnez un volet tryptique de pare-brise en fonction de votre camping-car</p>
-                      <a href="#" class="btn btn-primary d-flex justify-content-center" v-on:click="tryptiquePage">Choisir mes volets tryptiques</a>
+            <div class="row d-flex justify-content-around mt-5">
+                <div class="card col-3 p-3 shadow rounded grow backgroundCard" >
+                    <div class="h-100 d-flex flex-column justify-content-around">
+                        <img class="img-fluid" src="https://nouvelair-preprod.rouen-webmaster.com/wp-content/themes/essentials-child/devis-front/img/image-devis-volets-triptyque.png" alt="Card image cap">
+                    
+                        <h5 class="card-title d-flex justify-content-center">Volets tryptiques de pare-brise</h5>
+                        <p class="card-text d-flex justify-content-center">Sélectionnez un volet tryptique de pare-brise en fonction de votre camping-car</p>
+                        <a href="#" class="btn btn-primary d-flex justify-content-center" v-on:click="tryptiquePage">Choisir mes volets tryptiques</a>
                     </div>
                 </div>
-                <div class="card w-25 shadow rounded grow backgroundCard">
-                    <img class="card-img-top p-2" src="https://nouvelair-preprod.rouen-webmaster.com/wp-content/themes/essentials-child/devis-front/img/image-devis-volets-de-baies.png" alt="Card image cap">
-                    <div class="card-body">
-                      <h5 class="card-title d-flex justify-content-center">Volets de baie</h5>
-                      <p class="card-text d-flex justify-content-center">Renseignez les différentes dimensions de vos baies de camping-car</p>
-                      <a href="#" class="btn btn-primary d-flex justify-content-center" v-on:click="baiesPage">Je souhaite des volets de baies</a>
+                <div class="card col-3 p-3 shadow rounded grow backgroundCard">
+                    <div class="h-100 d-flex flex-column justify-content-around">
+                        <img class="img-fluid" src="https://nouvelair-preprod.rouen-webmaster.com/wp-content/themes/essentials-child/devis-front/img/image-devis-volets-de-baies.png" alt="Card image cap">
+                        <h5 class="card-title text-center">Volets de baie</h5>
+                        <p class="card-text d-flex justify-content-center">Renseignez les différentes dimensions de vos baies de camping-car</p>
+                        <a href="#" class="btn btn-primary d-flex justify-content-center" v-on:click="baiesPage">Je souhaite des volets de baies</a>
                     </div>
                 </div>
-                <div class="card w-25 shadow rounded grow backgroundCard">
-                    <img class="card-img-top p-2" src="https://nouvelair-preprod.rouen-webmaster.com/wp-content/themes/essentials-child/devis-front/img/image-devis-volets-de-domes.png" alt="Card image cap">
-                    <div class="card-body">
-                      <h5 class="card-title d-flex justify-content-center">Volets de dômes</h5>
-                      <p class="card-text d-flex justify-content-center">Renseignez les quantités des différents dômes, lanterneaux et skydôme de votre camping-car</p>
-                      <a href="#" class="btn btn-primary d-flex justify-content-center"  v-on:click="domesPage">Je shouaite des volets de dômes</a>
+                <div class="card col-3 p-3 shadow rounded grow backgroundCard">
+                    <div class="h-100 d-flex flex-column justify-content-around">
+                        <img class="img-fluid" src="https://nouvelair-preprod.rouen-webmaster.com/wp-content/themes/essentials-child/devis-front/img/image-devis-volets-de-domes.png" alt="Card image cap">
+                        <h5 class="card-title text-center">Volets de dômes</h5>
+                        <p class="card-text">Renseignez les quantités des différents dômes, lanterneaux et skydôme de votre camping-car</p>
+                        <a href="#" class="btn btn-primary d-flex justify-content-center"  v-on:click="domesPage">Je shouaite des volets de dômes</a>
                     </div>
-                </div>
-                
+                </div> 
             </div>
         </div>
 
-        <div v-show="domes"class="row width90 col-md-8">
-            <div class="horsGabarit col text-center"  v-on:click="domeCompteur" v-for="item in domesApi">
+        <div v-show="domes"class="row mt-5">
+            <div class="horsGabarit col text-center"  v-on:click="addDome(item)" v-for="item in domesApi">
                 <img style="background-color:rgb(202, 202, 202);" width="250" height="250" class="rounded-circle object-fit shadow" :src="item.fields.images.image" alt=""> <br>
-                <div v-on:click="addDome(item)"><h4 style="color:rgb(56, 56, 56);">{{item.fields.nom}}</h4></div>
+                <div><h4 style="color:rgb(56, 56, 56);">{{item.fields.nom}}</h4></div>
             </div>
         </div>
         
         
-        <div v-show="tryptique" class="col-md-8">
-            <div  class="volets-tryptiques row my-5 width90">
-                <div class="integral col text-center " v-on:click="chooseCC(item)" v-for="item in tryptiquesApi">
+        <div v-show="tryptique">
+            <div  class="volets-tryptiques d-flex justify-content-center row my-5">
+                <div class="integral text-center col-4" v-on:click="chooseCC(item)" v-for="item in tryptiquesApi">
                     <h4 class="colorType">{{item.fields.nom}}</h4>
                     <img :src="item.fields.images.image" width="250" height="250" style="background-color:white;" class="rounded-circle object-fit shadow" alt=""> <br>             
                 </div>
             </div>
         </div>
 
-        <div v-show="baies" class="col-md-8">
+        <div v-show="baies">
             <div class="d-flex justify-content-center">
-                <h3 >Je renseigne les quantités et les différentes dimensions</h3>
+                <h3 class="mt-5">Je renseigne les quantités et les différentes dimensions</h3>
             </div>
-            <div class="d-flex justify-content-center mt-5">
+            <div class="d-flex justify-content-center mt-3">
                 <div>
-                    <div style="font-weight:500;" class="d-flex form-group" v-for="(baie, index) in dimensionBaies">
-                        <span>Baie {{index+1}} <span style="color:rgb(240, 12, 12);">L</span> &nbsp;</span>
-                        <input @keypress.enter="pushInput()" id="input1" class="h-100 col-4" v-model="baie.longueur">
-                        <span>&nbsp;cm <span style="font-size:1.2em;"> x </span> <span style="color:rgb(240, 12, 12);">H</span>&nbsp;</span>
-                        <input @keypress.enter="pushInput()" id="input2" class="h-100 col-4" v-model="baie.hauteur">
+                    <div class="d-flex form-group" v-for="(baie, index) in dimensionBaies">
+                        <span>Baie {{index+1}} L &nbsp;</span>
+                        <input @keypress.enter="pushInput()" type="number" class="h-100 col-4" v-model="baie.longueur">
+                        <span>&nbsp;cm x H&nbsp;</span>
+                        <input @keypress.enter="pushInput()" type="number" class="h-100 col-4" v-model="baie.hauteur">
                         <span>&nbsp;cm</span>
-                    </div>
-                    
-                    <button class="btn btn-success" v-if="checkQty" v-on:click="substractItem">Retirer</button>
-                    
+                    </div>                    
                     <button class="btn btn-success" v-on:click="addItem">Ajouter</button>
+                    <button class="btn btn-danger" v-if="checkQty" v-on:click="substractItem">Retirer</button>
                     <button class="btn btn-primary" @click="pushInput()">Entrer</button>
                     
                 </div>
             </div>
         </div>
-        <div v-show="formulaire" class="widthFormulaire col-md-8">
+        <div v-show="formulaire" class="col-6">
             <form action="" id="app" v-on:submit="checkForm">
                 <p v-if="errors.length">
                     <b>Please correct the following error(s):</b>
@@ -135,58 +199,6 @@
                   </div>
                   <button type="submit" class="btn btn-primary">Submit</button>                             
             </form>
-        </div>
-        <div class="backgroundButton col-md-4" v-show="menuButtons">
-            <div v-if="menuButtonsNormal">
-                <img src="img/logo1.png">
-                <div>
-                    <div>Ma sélection</div>
-                    <div v-if="tryptiqueIsActive">volet tryptique du pare brise : {{ choixTryptique }}</div>
-                    
-                    <div v-for="(item, index) in testFunction" style="margin-top:20px;margin-bottom:20px;">
-                        <span> Baie {{index+1}} = L {{ item.longueur }} x {{ item.hauteur }}cm</span>              
-                    </div>
-
-                    <div v-if="dome > 0">volet de dôme : {{ dome }}</div>
-                    <div v-if="lanterneau > 0">volet de lanterneau : {{ lanterneau }}</div>
-                    <div v-if="skydome > 0">volet de skydôme : {{ skydome }}</div>
-                </div>
-                <button class="buttonMenu btn btn-primary" >Modifier ma sélection</button>
-                <button class="buttonMenu btn btn-primary" v-on:click="tryptiquePage" v-show="buttonTryptique">Ajouter des tryptiques</button>
-                <button class="buttonMenu btn btn-primary" v-on:click="baiesPage" v-show="buttonBaie">Ajouter des baies</button>
-                <button class="buttonMenu btn btn-primary" v-on:click="domesPage" v-show="buttonDome">Ajouter un dome</button>
-                <button class="btn btn-primary" v-on:click="formPage">C'est tout, merci ! Je génère mon devis</button>
-                <button class="btn btn-primary" v-on:click="accueilPage">Accueil</button>
-                
-                
-                
-            </div>
-            <div v-else>
-                <img src="img/logo1.png">
-                <button class="buttonMenu btn btn-primary" v-on:click="tryptiquePage" v-show="buttonTryptique">Ajouter des tryptiques</button>
-                <button class="buttonMenu btn btn-primary" v-on:click="baiesPage" v-show="buttonBaie">Ajouter des baies</button>
-                <button class="buttonMenu btn btn-primary" v-on:click="domesPage" v-show="buttonDome">Ajouter un dome</button>
-                <button class="btn btn-primary" v-on:click="formPage">C'est tout, merci ! Je génère mon devis</button>
-                <button class="btn btn-primary" v-on:click="accueilPage">Accueil</button>
-                <div class="d-flex">
-                    <div v-if="tryptiqueIsActive">volet tryptique du pare brise : 
-                    <span>
-                        <label for="exampleFormControlSelect1">Type de camping-car</label>
-                        <select class="form-control" id="exampleFormControlSelect1">
-                            <option>Intégral</option>
-                            <option>Profilé</option>
-                            <option>Capucine</option>
-                            <option>Fourgon</option>
-                            <option>Hors-gabarit</option>
-                        </select>
-                    </span>
-                    </div>
-
-                    <div v-if="dome > 0">volet de dôme : {{ dome }}</div>
-                    <div v-if="lanterneau > 0">volet de lanterneau : {{ lanterneau }}</div>
-                    <div v-if="skydome > 0">volet de skydôme : {{ skydome }}</div>
-                </div>
-            </div>
         </div>
             
     </div>
@@ -351,45 +363,34 @@
 
                 },
                 addDome(item) {
-                    this.choixDomes.length;
-                    for(var l = 0; l < this.domesApi.length; l ++) {
-                        
-                        
-
-
+                    console.log(this.choixDomes[0].name)
+                    console.log(item.fields)
+                    let count = 0;
+                    for(var l = 0; l < this.choixDomes.length; l ++) {   
+                        if( item.fields.nom === this.choixDomes[l].name) {
+                            if (item.fields.accepte_qte === true) {
+                                this.choixDomes[l].quantity = this.choixDomes[l].quantity+1;
+                                console.log(this.choixDomes)
+                                count ++;
+                            } else {
+                                this.choixDomes[l].quantity = 1;
+                                console.log(this.choixDomes)
+                                count ++;
+                            }
+                        }
                     }
-                    this.choixDomes.push(item.fields.name)
-
-                    this.choixDomes.push({
-                            quantity: '',
-                            dome: item.fields.name,
-                        })
-
-
-                    
-                    // for(var l = 0; l < this.choixDomes.length; l ++) {
-                    //     console.log(item.fields.nom)
-                    //     console.log(this.choixDomes[l])
-
-                    //     if (item.fields.nom === this.choixDomes[l]) {
-                    //         if(item.fields.accepte_qte === true) {
-                    //             this.choixDomes[l] = this.choixDomes[l]+1
-                    //         } else {
-                    //             this.choixDomes[l] = 1;
-                    //         }
-                    //         count ++ ;                            
-                    //     }                        
-                    // }                   
-                    // if (count === 0) {
-                    //     this.choixDomes.push(item.fields.nom);
-                    // };
-                    // console.log(count);
-                    // console.log(this.choixDomes)
-                    
+                    if ( count === 0 ) {
+                        for(var h = 0; h < this.choixDomes.length; h ++) {   
+                            if (this.choixDomes[h].name == "") {
+                                this.choixDomes[h].name = item.fields.nom
+                                this.choixDomes[h].quantity = 1
+                                console.log(this.choixDomes)
+                                return;
+                            }
+                        }
+                    }
                 },
-                domeCompteur() {
-                    this.dome ++;
-                },
+                
                 lanterneauCompteur() {
                     this.lanterneau ++;
                 },
@@ -441,7 +442,7 @@
                 testFunction2() {
                     for (var l = 0; l < this.domesApi.length; l ++) {
                         this.choixDomes.push({
-                            quantity: 0,
+                            quantity: '',
                             name: '',
                     
                         }) 
