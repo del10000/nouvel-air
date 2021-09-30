@@ -31,6 +31,25 @@
                     <div>
                         <button class="btn btn-primary" v-on:click="formPage">C'est tout, merci ! Je génère mon devis</button>
                     </div>
+                  
+                    <div v-for="item in choixDomes">
+                        <div>
+                            {{item.name}}  {{item.quantity}}
+                        </div>                                     
+                    </div>
+                    
+                    <div>
+                        <div v-if="tryptiqueIsActive">volet tryptique du pare brise : {{ choixTryptique }}</div>
+                        <div v-if="dome > 0">volet de dôme : {{ dome }}</div>
+                        <div v-if="lanterneau > 0">volet de lanterneau : {{ lanterneau }}</div>
+                        <div v-if="skydome > 0">volet de skydôme : {{ skydome }}</div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <div v-for="(item, index) in testFunction">
+
+                        <span> Baie {{index+1}} = L {{ item.longueur }} x {{ item.hauteur }}cm</span>
+                    </div>
                 </div>
                 
             </div>
@@ -92,46 +111,45 @@
             </div>
         </div>
 
-        <div class="row">
-            <div v-show="domes"class="row mt-5 col-9">
-                <div class="horsGabarit col text-center"  v-on:click="domeCompteur" v-for="item in domesApi">
-                    <img style="background-color:rgb(202, 202, 202);" width="250" height="250" class="rounded-circle object-fit shadow" :src="item.fields.images.image" alt=""> <br>
-                    <div><h4 style="color:rgb(56, 56, 56);">{{item.fields.nom}}</h4></div>
+        <div v-show="domes"class="row mt-5">
+            <div class="horsGabarit col text-center"  v-on:click="addDome(item)" v-for="item in domesApi">
+                <img style="background-color:rgb(202, 202, 202);" width="250" height="250" class="rounded-circle object-fit shadow" :src="item.fields.images.image" alt=""> <br>
+                <div><h4 style="color:rgb(56, 56, 56);">{{item.fields.nom}}</h4></div>
+            </div>
+        </div>
+        
+        
+        <div v-show="tryptique">
+            <div  class="volets-tryptiques d-flex justify-content-center row my-5">
+                <div class="integral text-center col-4" v-on:click="chooseCC(item)" v-for="item in tryptiquesApi">
+                    <h4 class="colorType">{{item.fields.nom}}</h4>
+                    <img :src="item.fields.images.image" width="250" height="250" style="background-color:white;" class="rounded-circle object-fit shadow" alt=""> <br>             
                 </div>
             </div>
-            
-            
-            <div v-show="tryptique" class="col-9">
-                <div  class="volets-tryptiques d-flex justify-content-center row my-5">
-                    <div class="integral text-center col-4" v-on:click="chooseCC(item)" v-for="item in tryptiquesApi">
-                        <h4 class="colorType">{{item.fields.nom}}</h4>
-                        <img :src="item.fields.images.image" width="250" height="250" style="background-color:white;" class="rounded-circle object-fit shadow" alt=""> <br>             
-                    </div>
-                </div>
-            </div>
+        </div>
 
-            <div v-show="baies">
-                <div class="col-9">
-                    <div class="d-flex justify-content-center">
-                        <h3 class="mt-5">Je renseigne les quantités et les différentes dimensions</h3>
-                    </div>
-                    <div class="d-flex justify-content-center mt-3">
-                        <div>
-                            <div class="d-flex form-group" v-for="(baie, index) in dimensionBaies">
-                                <span>Baie {{index+1}} L &nbsp;</span>
-                                <input @keypress.enter="pushInput()" type="number" class="h-100 col-4" v-model="baie.longueur">
-                                <span>&nbsp;cm x H&nbsp;</span>
-                                <input @keypress.enter="pushInput()" type="number" class="h-100 col-4" v-model="baie.hauteur">
-                                <span>&nbsp;cm</span>
-                            </div>                    
-                            <button class="btn btn-success" v-on:click="addItem">Ajouter</button>
-                            <button class="btn btn-danger" v-if="checkQty" v-on:click="substractItem">Retirer</button>
-                            <button class="btn btn-primary" @click="pushInput()">Entrer</button>
-                            
-                        </div>
+        <div v-show="baies">
+            <div class="col-9">
+                <div class="d-flex justify-content-center">
+                    <h3 class="mt-5">Je renseigne les quantités et les différentes dimensions</h3>
+                </div>
+                <div class="d-flex justify-content-center mt-3">
+                    <div>
+                        <div class="d-flex form-group" v-for="(baie, index) in dimensionBaies">
+                            <span>Baie {{index+1}} L &nbsp;</span>
+                            <input @keypress.enter="pushInput()" type="number" class="h-100 col-4" v-model="baie.longueur">
+                            <span>&nbsp;cm x H&nbsp;</span>
+                            <input @keypress.enter="pushInput()" type="number" class="h-100 col-4" v-model="baie.hauteur">
+                            <span>&nbsp;cm</span>
+                        </div>                    
+                        <button class="btn btn-success" v-on:click="addItem">Ajouter</button>
+                        <button class="btn btn-danger" v-if="checkQty" v-on:click="substractItem">Retirer</button>
+                        <button class="btn btn-primary" @click="pushInput()">Entrer</button>
+                        
                     </div>
                 </div>
             </div>
+        </div>
 
             <div v-show="menuButtons" class="col-3 mt-5">
                 <div v-if="menuButtonsNormal">
@@ -151,7 +169,6 @@
                     </div>
                 </div>
             </div>
-        </div>
 
 
         <div v-show="formulaire" class="col-8">
@@ -370,45 +387,34 @@
 
                 },
                 addDome(item) {
-                    this.choixDomes.length;
-                    for(var l = 0; l < this.domesApi.length; l ++) {
-                        
-                        
-
-
+                    console.log(this.choixDomes[0].name)
+                    console.log(item.fields)
+                    let count = 0;
+                    for(var l = 0; l < this.choixDomes.length; l ++) {   
+                        if( item.fields.nom === this.choixDomes[l].name) {
+                            if (item.fields.accepte_qte === true) {
+                                this.choixDomes[l].quantity = this.choixDomes[l].quantity+1;
+                                console.log(this.choixDomes)
+                                count ++;
+                            } else {
+                                this.choixDomes[l].quantity = 1;
+                                console.log(this.choixDomes)
+                                count ++;
+                            }
+                        }
                     }
-                    this.choixDomes.push(item.fields.name)
-
-                    this.choixDomes.push({
-                            quantity: '',
-                            dome: item.fields.name,
-                        })
-
-
-                    
-                    // for(var l = 0; l < this.choixDomes.length; l ++) {
-                    //     console.log(item.fields.nom)
-                    //     console.log(this.choixDomes[l])
-
-                    //     if (item.fields.nom === this.choixDomes[l]) {
-                    //         if(item.fields.accepte_qte === true) {
-                    //             this.choixDomes[l] = this.choixDomes[l]+1
-                    //         } else {
-                    //             this.choixDomes[l] = 1;
-                    //         }
-                    //         count ++ ;                            
-                    //     }                        
-                    // }                   
-                    // if (count === 0) {
-                    //     this.choixDomes.push(item.fields.nom);
-                    // };
-                    // console.log(count);
-                    // console.log(this.choixDomes)
-                    
+                    if ( count === 0 ) {
+                        for(var h = 0; h < this.choixDomes.length; h ++) {   
+                            if (this.choixDomes[h].name == "") {
+                                this.choixDomes[h].name = item.fields.nom
+                                this.choixDomes[h].quantity = 1
+                                console.log(this.choixDomes)
+                                return;
+                            }
+                        }
+                    }
                 },
-                domeCompteur() {
-                    this.dome ++;
-                },
+                
                 lanterneauCompteur() {
                     this.lanterneau ++;
                 },
@@ -460,7 +466,7 @@
                 testFunction2() {
                     for (var l = 0; l < this.domesApi.length; l ++) {
                         this.choixDomes.push({
-                            quantity: 0,
+                            quantity: '',
                             name: '',
                     
                         }) 
