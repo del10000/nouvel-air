@@ -77,10 +77,9 @@
                         <span>cm</span>
                     </div>
                     <button v-on:click="addItem">Ajouter</button>
+                    <!-- <button v-if="checkQtyItem" v-on:click="substractItem">Retirer</button> -->
                     <button @click="pushInput()">Entrer</button>
-                    <ul>
-                        <li v-for="(dimension, index) in dimensionBaies" >L={{dimension.longueur}} {{index}} h={{dimension.hauteur}}</li>
-                    </ul>
+                    
                 </div>
             </div>
         </div>
@@ -134,7 +133,7 @@
             </form>
         </div>
         <div class="backgroundButton col-md-4" v-show="menuButtons">
-            <div>
+            <div v-if="menuButtonsNormal">
                 <img src="img/logo1.png">
                 <button class="buttonMenu btn btn-primary" v-on:click="tryptiquePage" v-show="buttonTryptique">Ajouter des tryptiques</button>
                 <button class="buttonMenu btn btn-primary" v-on:click="baiesPage" v-show="buttonBaie">Ajouter des baies</button>
@@ -147,8 +146,15 @@
                     <div v-if="lanterneau > 0">volet de lanterneau : {{ lanterneau }}</div>
                     <div v-if="skydome > 0">volet de skydôme : {{ skydome }}</div>
                 </div>
+                <div v-for="(item, index) in testFunction">
+
+
+                    
+                   hauteur {{index+1}} {{ item.hauteur }} 
+                </div>
+                
             </div>
-            <div>
+            <div v-else>
                 <img src="img/logo1.png">
                 <button class="buttonMenu btn btn-primary" v-on:click="tryptiquePage" v-show="buttonTryptique">Ajouter des tryptiques</button>
                 <button class="buttonMenu btn btn-primary" v-on:click="baiesPage" v-show="buttonBaie">Ajouter des baies</button>
@@ -210,6 +216,11 @@
                 menuButtons: false,
                 tryptiquesApi: [],
                 domesApi: [],
+
+                menuButtonsNormal: true,
+                baiesNotEmpty: [],
+
+                checkQtyBaies: false,
             },
 
             methods: {
@@ -218,6 +229,9 @@
                         longueur: '',
                         hauteur: '',
                     })
+                },
+                substractItem: function() {
+                    this.dimensionBaies.pop();
                 },
                 chooseCC(item) {
                     this.type = item.fields.nom
@@ -352,17 +366,43 @@
                     .then(data => (this.domesApi = data));          
                 },
 
-                createBaiesArray(){
+                createBaiesArray() {
                     for (let i = 0; i < 8; i++){
                         this.dimensionBaies.push({
                             longueur: '',
                             hauteur: '',
                         })
                     };
-                }
+                },
+                
+                
             },
             computed: {  
-               
+                testFunction() {
+
+                    let baiesNotEmpty = [];
+
+                    for (var k = 0; k < this.dimensionBaies.length; k ++) {
+                       
+                        if (this.dimensionBaies[k].hauteur === "" || this.dimensionBaies[k].longueur === "") {
+                        } else {
+                            baiesNotEmpty.push({ "hauteur" : this.dimensionBaies[k].hauteur, "longueur" : this.dimensionBaies[k].longueur});
+                            // this.baiesNotEmpty.push(this.dimensionBaies[k].longueur);
+                           
+                            // console.log(this.baiesNotEmpty)
+                        }
+                    //    console.log(this.dimensionBaies[k].hauteur)
+                    }
+                    return baiesNotEmpty;
+                },
+                checkQty() {
+                    if (this.dimensionBaies.length < 9) {
+                        return false;
+                    } else {
+                        return true;
+                        console.log('quantité supérieur a 6')
+                    }
+                }
             },
             created: function () {
                 this.axiosGetTryptique()
