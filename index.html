@@ -49,7 +49,7 @@
         <div v-show="domes"class="row width90 col-md-8">
             <div class="horsGabarit col text-center"  v-on:click="domeCompteur" v-for="item in domesApi">
                 <img style="background-color:rgb(202, 202, 202);" width="250" height="250" class="rounded-circle object-fit shadow" :src="item.fields.images.image" alt=""> <br>
-                <div><h4 style="color:rgb(56, 56, 56);">{{item.fields.nom}}</h4></div>
+                <div v-on:click="addDome(item)"><h4 style="color:rgb(56, 56, 56);">{{item.fields.nom}}</h4></div>
             </div>
         </div>
         
@@ -69,14 +69,14 @@
             </div>
             <div class="d-flex justify-content-center mt-5">
                 <div>
-                    <div class="d-flex form-group" v-for="(baie, index) in dimensionBaies">
-                        <span>Baie {{index+1}} L &nbsp;</span>
+                    <div style="font-weight:500;" class="d-flex form-group" v-for="(baie, index) in dimensionBaies">
+                        <span>Baie {{index+1}} <span style="color:rgb(240, 12, 12);">L</span> &nbsp;</span>
                         <input @keypress.enter="pushInput()" id="input1" class="h-100 col-4" v-model="baie.longueur">
-                        <span>&nbsp;cm x H&nbsp;</span>
+                        <span>&nbsp;cm <span style="font-size:1.2em;"> x </span> <span style="color:rgb(240, 12, 12);">H</span>&nbsp;</span>
                         <input @keypress.enter="pushInput()" id="input2" class="h-100 col-4" v-model="baie.hauteur">
                         <span>&nbsp;cm</span>
                     </div>
-                   
+                    
                     <button class="btn btn-success" v-if="checkQty" v-on:click="substractItem">Retirer</button>
                     
                     <button class="btn btn-success" v-on:click="addItem">Ajouter</button>
@@ -139,23 +139,26 @@
         <div class="backgroundButton col-md-4" v-show="menuButtons">
             <div v-if="menuButtonsNormal">
                 <img src="img/logo1.png">
+                <div>
+                    <div>Ma sélection</div>
+                    <div v-if="tryptiqueIsActive">volet tryptique du pare brise : {{ choixTryptique }}</div>
+                    
+                    <div v-for="(item, index) in testFunction" style="margin-top:20px;margin-bottom:20px;">
+                        <span> Baie {{index+1}} = L {{ item.longueur }} x {{ item.hauteur }}cm</span>              
+                    </div>
+
+                    <div v-if="dome > 0">volet de dôme : {{ dome }}</div>
+                    <div v-if="lanterneau > 0">volet de lanterneau : {{ lanterneau }}</div>
+                    <div v-if="skydome > 0">volet de skydôme : {{ skydome }}</div>
+                </div>
+                <button class="buttonMenu btn btn-primary" >Modifier ma sélection</button>
                 <button class="buttonMenu btn btn-primary" v-on:click="tryptiquePage" v-show="buttonTryptique">Ajouter des tryptiques</button>
                 <button class="buttonMenu btn btn-primary" v-on:click="baiesPage" v-show="buttonBaie">Ajouter des baies</button>
                 <button class="buttonMenu btn btn-primary" v-on:click="domesPage" v-show="buttonDome">Ajouter un dome</button>
                 <button class="btn btn-primary" v-on:click="formPage">C'est tout, merci ! Je génère mon devis</button>
                 <button class="btn btn-primary" v-on:click="accueilPage">Accueil</button>
-                <div>
-                    <div v-if="tryptiqueIsActive">volet tryptique du pare brise : {{ choixTryptique }}</div>
-                    <div v-if="dome > 0">volet de dôme : {{ dome }}</div>
-                    <div v-if="lanterneau > 0">volet de lanterneau : {{ lanterneau }}</div>
-                    <div v-if="skydome > 0">volet de skydôme : {{ skydome }}</div>
-                </div>
-                <div v-for="(item, index) in testFunction">
-
-                    <span> Baie {{index+1}} = L {{ item.longueur }} x {{ item.hauteur }}cm</span>
-
-                    
-                </div>
+                
+                
                 
             </div>
             <div v-else>
@@ -203,6 +206,7 @@
                 buttonBaie: true,
                 buttonDome: true,
 
+                choixDomes: [],
                 dome: 0,
                 lanterneau: 0,
                 skydome: 0,
@@ -253,6 +257,12 @@
                     this.buttonTryptique = false;
                     this.menuButtons = true;
 
+                    if (this.testFunction.length < 1) {
+                        this.buttonBaie = true;
+                    } else {
+                        this.buttonBaie = false;
+                    }
+
 
                     if(this.lanterneau !== 0 || this.dome !== 0 || this.skydome !== 0) {
                         this.buttonDome = false;
@@ -275,6 +285,13 @@
                     this.tryptiqueIsActive = false;
                     this.buttonDome = false;
                     this.menuButtons = true;
+                    
+
+                    if (this.testFunction.length < 1) {
+                        this.buttonBaie = true;
+                    } else {
+                        this.buttonBaie = false;
+                    }
 
 
                     if(this.tryptiqueIsActive !== false) {
@@ -282,7 +299,10 @@
                     }
                     if(this.choixTryptique.length < 1) {
                         this.buttonTryptique = true;
+                    } else {
+                        this.tryptiqueIsActive = true;
                     }
+                    
 
                 },
                 baiesPage() {
@@ -304,6 +324,8 @@
 
                     if(this.choixTryptique.length < 1) {
                         this.buttonTryptique = true;
+                    } else {
+                        this.tryptiqueIsActive = true;
                     }
 
                     if(this.tryptiqueIsActive !== false) {
@@ -327,6 +349,43 @@
                     this.formulaire = true;
                     this.menuButtons = true;
 
+                },
+                addDome(item) {
+                    this.choixDomes.length;
+                    for(var l = 0; l < this.domesApi.length; l ++) {
+                        
+                        
+
+
+                    }
+                    this.choixDomes.push(item.fields.name)
+
+                    this.choixDomes.push({
+                            quantity: '',
+                            dome: item.fields.name,
+                        })
+
+
+                    
+                    for(var l = 0; l < this.choixDomes.length; l ++) {
+                        console.log(item.fields.nom)
+                        console.log(this.choixDomes[l])
+
+                        if (item.fields.nom === this.choixDomes[l]) {
+                            if(item.fields.accepte_qte === true) {
+                                this.choixDomes[l] = this.choixDomes[l]+1
+                            } else {
+                                this.choixDomes[l] = 1;
+                            }
+                            count ++ ;                            
+                        }                        
+                    }                   
+                    if (count === 0) {
+                        this.choixDomes.push(item.fields.nom);
+                    };
+                    console.log(count);
+                    console.log(this.choixDomes)
+                    
                 },
                 domeCompteur() {
                     this.dome ++;
@@ -367,7 +426,8 @@
                 axiosGetDomes() {
                     fetch("https://nouvelair-preprod.rouen-webmaster.com/wp-json/nouvelair/api/alldome")
                     .then((response) => response.json()) 
-                    .then(data => (this.domesApi = data));          
+                    .then(data => {(this.domesApi = data); this.testFunction2()});   
+                          
                 },
 
                 createBaiesArray() {
@@ -377,6 +437,16 @@
                             hauteur: '',
                         })
                     };
+                },
+                testFunction2() {
+                    for (var l = 0; l < this.domesApi.length; l ++) {
+                        this.choixDomes.push({
+                            quantity: 0,
+                            name: '',
+                    
+                        }) 
+                    }   
+                    console.log(this.choixDomes)    
                 },
                 
                 
@@ -406,12 +476,19 @@
                         return true;
                         console.log('quantité supérieur a 6')
                     }
-                }
+                },
+                
             },
             created: function () {
                 this.axiosGetTryptique()
                 this.axiosGetDomes()
                 this.createBaiesArray()
+                // console.log(this.domesApi); 
+                // console.log(this.choixDomes); 
+            },
+            mounted() {
+                
+                           
             }
         })
     </script>
