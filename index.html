@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body class="backgroundApp">
+<body style="overflow-x: hidden;">
     
     <div id="app" class="">
 
@@ -51,11 +51,11 @@
             </div>
             <div v-else>
                 <img src="img/logo1.png">
+                <button class="btn btn-primary" v-on:click="accueilPage">Accueil</button>
                 <button class=" btn btn-primary" v-on:click="tryptiquePage" v-show="buttonTryptique">Ajouter des tryptiques</button>
                 <button class=" btn btn-primary" v-on:click="baiesPage" v-show="buttonBaie">Ajouter des baies</button>
                 <button class=" btn btn-primary" v-on:click="domesPage" v-show="buttonDome">Ajouter un dome</button>
                 <button class="btn btn-primary" v-on:click="formPage">C'est tout, merci ! Je génère mon devis</button>
-                <button class="btn btn-primary" v-on:click="accueilPage">Accueil</button>
                 <div class="d-flex">
                     <div v-if="tryptiqueIsActive">volet tryptique du pare brise : 
                     <span>
@@ -65,7 +65,6 @@
                         </select>
                     </span>
                     </div>
-                    
 
                     <div v-if="dome > 0">volet de dôme : {{ dome }}</div>
                     <div v-if="lanterneau > 0">volet de lanterneau : {{ lanterneau }}</div>
@@ -126,75 +125,100 @@
         </div>
 
         <div v-show="baies">
-            <div class="d-flex justify-content-center">
-                <h3 class="mt-5">Je renseigne les quantités et les différentes dimensions</h3>
-            </div>
-            <div class="d-flex justify-content-center mt-3">
-                <div>
-                    <div class="d-flex form-group" v-for="(baie, index) in dimensionBaies">
-                        <span>Baie {{index+1}} L &nbsp;</span>
-                        <input @keypress.enter="pushInput()" type="number" class="h-100 col-4" v-model="baie.longueur">
-                        <span>&nbsp;cm x H&nbsp;</span>
-                        <input @keypress.enter="pushInput()" type="number" class="h-100 col-4" v-model="baie.hauteur">
-                        <span>&nbsp;cm</span>
-                    </div>                    
-                    <button class="btn btn-success" v-on:click="addItem">Ajouter</button>
-                    <button class="btn btn-danger" v-if="checkQty" v-on:click="substractItem">Retirer</button>
-                    <button class="btn btn-primary" @click="pushInput()">Entrer</button>
-                    
+            <div class="col-9">
+                <div class="d-flex justify-content-center">
+                    <h3 class="mt-5">Je renseigne les quantités et les différentes dimensions</h3>
+                </div>
+                <div class="d-flex justify-content-center mt-3">
+                    <div>
+                        <div class="d-flex form-group" v-for="(baie, index) in dimensionBaies">
+                            <span>Baie {{index+1}} L &nbsp;</span>
+                            <input @keypress.enter="pushInput()" type="number" class="h-100 col-4" v-model="baie.longueur">
+                            <span>&nbsp;cm x H&nbsp;</span>
+                            <input @keypress.enter="pushInput()" type="number" class="h-100 col-4" v-model="baie.hauteur">
+                            <span>&nbsp;cm</span>
+                        </div>                    
+                        <button class="btn btn-success" v-on:click="addItem">Ajouter</button>
+                        <button class="btn btn-danger" v-if="checkQty" v-on:click="substractItem">Retirer</button>
+                        <button class="btn btn-primary" @click="pushInput()">Entrer</button>
+                        
+                    </div>
                 </div>
             </div>
         </div>
-        <div v-show="formulaire" class="col-6">
-            <form action="" id="app" v-on:submit="checkForm">
-                <p v-if="errors.length">
-                    <b>Please correct the following error(s):</b>
-                    <ul>
-                      <li v-for="error in errors">{{ error }}</li>
-                    </ul>
-                </p>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                      <label for="inputEmail4">Nom*</label>
-                      <input type="text" v-model="firstname" class="form-control" id="inputEmail4" placeholder="Nom" required>
+
+            <div v-show="menuButtons" class="col-3 mt-5">
+                <div v-if="menuButtonsNormal">
+                    <div class="card shadow" style="height: 100px;">
+                        <div>
+                            <p class="text-center">Mon panier :</p>
+                            <div v-if="tryptiqueIsActive">volet tryptique du pare brise : {{ choixTryptique }}</div>
+                            <div v-if="dome > 0">volet de dôme : {{ dome }}</div>
+                            <div v-if="lanterneau > 0">volet de lanterneau : {{ lanterneau }}</div>
+                            <div v-if="skydome > 0">volet de skydôme : {{ skydome }}</div>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <div v-for="(item, index) in testFunction">
+                                <span> Baie {{index+1}} = L {{ item.longueur }} x {{ item.hauteur }}cm</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group col-md-6">
-                      <label for="inputPassword4">Prénom*</label>
-                      <input type="text" class="form-control" placeholder="Prénom" required>
+                </div>
+            </div>
+
+
+        <div v-show="formulaire" class="col-8">
+            <div class="d-flex justify-content-center mt-5">
+                <form action="" id="app" v-on:submit="checkForm">
+                    <p v-if="errors.length">
+                        <b>Please correct the following error(s):</b>
+                        <ul>
+                          <li v-for="error in errors">{{ error }}</li>
+                        </ul>
+                    </p>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                          <label for="inputEmail4">Nom*</label>
+                          <input type="text" v-model="firstname" class="form-control" id="inputEmail4" placeholder="Nom" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for="inputPassword4">Prénom*</label>
+                          <input type="text" class="form-control" placeholder="Prénom" required>
+                        </div>
                     </div>
-                  </div>
-                  <div class="form-row">
-                    <div class="form-group col-md-6">
-                      <label for="inputEmail4">Adresse email*</label>
-                      <input type="email" v-model="email" class="form-control" placeholder="Votre adresse email" required>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                          <label for="inputEmail4">Adresse email*</label>
+                          <input type="email" v-model="email" class="form-control" placeholder="Votre adresse email" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for="inputPassword4">Téléphone*</label>
+                          <input type="tel" pattern="[0-9]{10}" class="form-control" placeholder="00 00 00 00 00" required>
+                        </div>
                     </div>
-                    <div class="form-group col-md-6">
-                      <label for="inputPassword4">Téléphone*</label>
-                      <input type="tel" pattern="[0-9]{10}" class="form-control" placeholder="00 00 00 00 00" required>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                          <label for="inputEmail4">Marque de camping-car</label>
+                          <input type="email" class="form-control" placeholder="Marque du camping-car">
+                        </div>
+                        <div class="form-group col-md-4">
+                          <label for="inputPassword4">Modèle de camping-car</label>
+                          <input type="text" class="form-control" placeholder="Modèle du camping-car">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="exampleFormControlSelect1">Type de camping-car</label>
+                            <select class="form-control" id="exampleFormControlSelect1">
+                                <option v-for="item in tryptiquesApi" v-on:click="chooseCC(item)" value="">{{item.fields.nom}}</option>
+                            </select>
+                        </div>
                     </div>
-                  </div>
-                  <div class="form-row">
-                    <div class="form-group col-md-4">
-                      <label for="inputEmail4">Marque de camping-car</label>
-                      <input type="email" class="form-control" placeholder="Marque du camping-car">
+                    <div class="form-group">
+                        <label for="exampleFormControlTextarea1">Précisez votre demande</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                     </div>
-                    <div class="form-group col-md-4">
-                      <label for="inputPassword4">Modèle de camping-car</label>
-                      <input type="text" class="form-control" placeholder="Modèle du camping-car">
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="exampleFormControlSelect1">Type de camping-car</label>
-                        <select class="form-control" id="exampleFormControlSelect1">
-                            <option v-for="item in tryptiquesApi" v-on:click="chooseCC(item)" value="">{{item.fields.nom}}</option>
-                        </select>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleFormControlTextarea1">Précisez votre demande</label>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                  </div>
-                  <button type="submit" class="btn btn-primary">Submit</button>                             
-            </form>
+                    <button type="submit" class="btn btn-primary">Submit</button>                             
+                </form>
+            </div>
         </div>
             
     </div>
