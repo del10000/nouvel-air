@@ -367,24 +367,24 @@
 
 
                     
-                    for(var l = 0; l < this.choixDomes.length; l ++) {
-                        console.log(item.fields.nom)
-                        console.log(this.choixDomes[l])
+                    // for(var l = 0; l < this.choixDomes.length; l ++) {
+                    //     console.log(item.fields.nom)
+                    //     console.log(this.choixDomes[l])
 
-                        if (item.fields.nom === this.choixDomes[l]) {
-                            if(item.fields.accepte_qte === true) {
-                                this.choixDomes[l] = this.choixDomes[l]+1
-                            } else {
-                                this.choixDomes[l] = 1;
-                            }
-                            count ++ ;                            
-                        }                        
-                    }                   
-                    if (count === 0) {
-                        this.choixDomes.push(item.fields.nom);
-                    };
-                    console.log(count);
-                    console.log(this.choixDomes)
+                    //     if (item.fields.nom === this.choixDomes[l]) {
+                    //         if(item.fields.accepte_qte === true) {
+                    //             this.choixDomes[l] = this.choixDomes[l]+1
+                    //         } else {
+                    //             this.choixDomes[l] = 1;
+                    //         }
+                    //         count ++ ;                            
+                    //     }                        
+                    // }                   
+                    // if (count === 0) {
+                    //     this.choixDomes.push(item.fields.nom);
+                    // };
+                    // console.log(count);
+                    // console.log(this.choixDomes)
                     
                 },
                 domeCompteur() {
