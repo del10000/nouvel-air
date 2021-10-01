@@ -19,23 +19,21 @@
                 </div>
                 
                 <div class="d-flex justify-content-center">
-                    
-                    <div v-show="buttonTryptique" class="m-5">
-                        <button class=" btn btn-primary" v-on:click="tryptiquePage">Ajouter des tryptiques</button>
+                    <button class="btn btn-primary" v-on:click="accueilPage">Accueil</button>&nbsp;
+                    <div v-show="buttonTryptique">
+                        <button class=" btn btn-primary" v-on:click="tryptiquePage">Ajouter des tryptiques</button>&nbsp;
                     </div>
-                    <div v-show="buttonBaie" class="m-5">
-                        <button class=" btn btn-primary" v-on:click="baiesPage">Ajouter des baies</button>
+                    <div v-show="buttonBaie">
+                        <button class=" btn btn-primary" v-on:click="baiesPage">Ajouter des baies</button>&nbsp;
                     </div>
-                    <div v-show="buttonDome" class="m-5">
-                        <button class=" btn btn-primary" v-on:click="domesPage">Ajouter un dome</button>
+                    <div v-show="buttonDome">
+                        <button class=" btn btn-primary" v-on:click="domesPage">Ajouter un dome</button>&nbsp;
                     </div>
-                                                        
-                </div>  
-                <div class="d-flex justify-content-around">
-                    <button class="btn btn-primary" v-on:click="accueilPage">Accueil</button>
-                    <button class="btn btn-primary" v-on:click="formPage">C'est tout, merci ! Je génère mon devis</button>
-                    <button class="btn btn-primary" >Editer mon panier</button>
-                </div>                               
+                    <div>
+                        <button class="btn btn-primary" v-on:click="formPage">C'est tout, merci ! Je génère mon devis</button>
+                    </div>
+                  
+                </div>
             </div>                        
         </div>
 
@@ -183,31 +181,30 @@
                         <div>
                             <div v-if="tryptiqueIsActive">volet tryptique du pare brise : {{ choixTryptique }}</div>                   
                         </div>
-                        <div class="d-flex justify-content-center">
-                            <div v-for="(item, index) in testFunction">
-        
-                                <span> Baie {{index+1}} = L {{ item.longueur }} x {{ item.hauteur }}cm</span>
-                            </div>
+                        <div v-for="(item, index) in testFunction">
+    
+                            <span> Baie {{index+1}} = L {{ item.longueur }} x {{ item.hauteur }}cm</span>
                         </div>
                         
                     </div>
                 </div>
                 <div v-else>
-                    <div class="card shadow panier" style="height: 100px;">
-                        <h3>Mon panier</h3>
-                        <div v-for="item in choixDomes">
-                            <div class="d-flex">
-                                {{item.name}}  <input style="margin-left:20px;" class="smallInput" v-model="item.quantity">
-                            </div>                                     
-                        </div>
+                    <div class="card shadow panier p-3" style="height: 100px;">
+                        <h3 class="text-center">Mon panier</h3>
+
                         <div>
                             <div v-if="tryptiqueIsActive">volet tryptique du pare brise : {{ choixTryptique }}</div>                   
                         </div>
-                        <div class="d-flex justify-content-center">
-                            <div v-for="(item, index) in testFunction">
-        
-                                <span> Baie {{index+1}} = L{{ item.longueur }} x {{ item.hauteur }}cm</span>
+                        <div v-if="choixDomes">
+                            <div v-for="item in choixDomes">
+                                <div class="d-flex">
+                                    {{item.name}} <input style="margin-left:20px;" class="smallInput" v-model="item.quantity">
+                                </div>                                     
                             </div>
+                        </div>
+                        <div v-for="(item, index) in testFunction">
+    
+                            <span> Baie {{index+1}} = L{{ item.longueur }} x {{ item.hauteur }}cm</span>
                         </div>
                         
                     </div>
@@ -490,21 +487,6 @@
                         console.log('quantité supérieur a 6')
                     }
                 },
-                // PanierActif() {
-                //     if (this.choixDomes[0].name !== [] || this.tryptiqueIsActive === true) {
-                //         return true;
-                //     }
-                //     return false;
-                // },
-               
-
-
-                    // if (this.domes === true) {
-                    //     return false;
-                    // } else if  (this.choixDomes[0].name !== "") {
-                    //     return false;
-                    // }
-                    // return true;
 
                 
             },
