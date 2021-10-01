@@ -19,12 +19,18 @@
                 </div>
                 
                 <div class="d-flex justify-content-center">
-                    
-                    <div v-show="buttonTryptique" class="m-5">
-                        <button class=" btn btn-primary" v-on:click="tryptiquePage">Ajouter des tryptiques</button>
+                    <button class="btn btn-primary" v-on:click="accueilPage">Accueil</button>&nbsp;
+                    <div v-show="buttonTryptique">
+                        <button class=" btn btn-primary" v-on:click="tryptiquePage">Ajouter des tryptiques</button>&nbsp;
                     </div>
-                    <div v-show="buttonBaie" class="m-5">
-                        <button class=" btn btn-primary" v-on:click="baiesPage">Ajouter des baies</button>
+                    <div v-show="buttonBaie">
+                        <button class=" btn btn-primary" v-on:click="baiesPage">Ajouter des baies</button>&nbsp;
+                    </div>
+                    <div v-show="buttonDome">
+                        <button class=" btn btn-primary" v-on:click="domesPage">Ajouter un dome</button>&nbsp;
+                    </div>
+                    <div>
+                        <button class="btn btn-primary" v-on:click="formPage">C'est tout, merci ! Je génère mon devis</button>&nbsp;
                     </div>
                     <div v-if="panierActif">
                         <button class="btn btn-primary" v-on:click="editCart">Editer mon panier</button>
@@ -32,7 +38,7 @@
                     <div v-if="!panierActif">
                         <button class="btn btn-primary" v-on:click="editCart">Fin édition</button>
                     </div>
-                  
+
                 </div>
             </div>                        
         </div>
@@ -80,7 +86,7 @@
                         <div><h4 style="color:rgb(56, 56, 56);">{{item.fields.nom}}</h4></div>
                     </div>
                 </div>
-                               
+                       
                 <div v-show="tryptique">
                     <div  class="volets-tryptiques d-flex justify-content-center row my-5">
                         <div class="integral text-center col-4" v-on:click="chooseCC(item)" v-for="item in tryptiquesApi">
@@ -91,7 +97,7 @@
                 </div>
 
                 <div v-show="baies">
-                    <div >
+                    <div>
                         <div class="d-flex justify-content-center">
                             <h3 class="mt-5">Je renseigne les quantités et les différentes dimensions</h3>
                         </div>
@@ -105,16 +111,13 @@
                                     <span>&nbsp;cm</span>
                                 </div>                    
                                 <button class="btn btn-success" v-on:click="addItem">Ajouter</button>
-                                <button class="btn btn-danger" v-if="checkQty" v-on:click="substractItem">Retirer</button>
-                                <!-- <button class="btn btn-primary" @click="pushInput()">Entrer</button> -->
-                                
+                                <button class="btn btn-danger" v-if="checkQty" v-on:click="substractItem">Retirer</button>                               
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div v-show="formulaire">
-                    
                     <div class="d-flex justify-content-center mt-5">
                         <form action="" id="app" v-on:submit="checkForm">
                             <p v-if="errors.length">
@@ -191,7 +194,7 @@
                         <h3 class="d-flex justify-content-center">Éditer mon panier</h3>
                         <div v-for="item in choixDomes">
                             <div class="d-flex">
-                                <span class="domeEdit">{{item.name}}</span><input style="margin-left:20px;" class="smallInput" value="{{item.quantity}}" v-model="item.quantity">
+                                <span class="domeEdit">{{item.name}}</span><input style="margin-left:20px;" class="smallInput"  v-model="item.quantity">
                             </div>                                     
                         </div>
                         <div>
@@ -210,7 +213,7 @@
 
                         <div class="d-flex justify-content-center">
                             <div v-for="(item, index) in testFunction">
-                                <span> Baie {{index+1}} = L <input v-model="item.longueur"> x <input v-model="item.hauteur"> cm</span>
+                                <span> Baie {{index+1}} = L <input v-model="item.longueur" class="smallInputBorder"> x <input v-model="item.hauteur" class="smallInputBorder"> cm</span>
                             </div>
                         </div>
                         
@@ -554,8 +557,11 @@
     }
     .smallInput{
         width:50px;
-        border: 0;
-        
+        border: 0;    
+    }
+    .smallInputBorder{
+        width:50px;
+
     }
     .panier{
         min-height:300px;
