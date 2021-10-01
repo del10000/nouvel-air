@@ -177,7 +177,7 @@
                         <h3 class="d-flex justify-content-center mt-2">Mon panier</h3>
                         <div v-for="item in choixDomes">
                             <div class="pb-3">
-                                {{item.name}} {{item.quantity}}
+                                {{item.name}} <span style="margin-left:20px;">{{item.quantity}}</span>
                             </div>                                     
                         </div>
                         <div>
@@ -192,10 +192,10 @@
                 </div>
                 <div v-else>
                     <div class="card shadow panier" style="height: 100px;">
-                        <h3 class="d-flex justify-content-center mt-2">Mon panier</h3>
+                        <h3 class="d-flex justify-content-center mt-2">Edition du panier</h3>
                         <div v-for="item in choixDomes">
                             <div class="d-flex">
-                                <span class="domeEdit ">{{item.name}}<span class="div"></span></span>  <input style="margin-left:20px;" class="smallInput" v-model="item.quantity">
+                                <span class="domeEdit ">{{item.name}}</span>  <input style="margin-left:20px;" class="smallInput" v-model="item.quantity">
                             </div>                                     
                         </div>
                         <div>
@@ -265,7 +265,6 @@
                 tryptiquesApi: [],
                 domesApi: [],
 
-                // panierActif: true,
                 baiesNotEmpty: [],
 
                 checkQtyBaies: false,
@@ -383,18 +382,14 @@
 
                 },
                 addDome(item) {
-                    console.log(this.choixDomes[0].name)
-                    console.log(item.fields)
                     let count = 0;
                     for(var l = 0; l < this.choixDomes.length; l ++) {   
                         if( item.fields.nom === this.choixDomes[l].name) {
                             if (item.fields.accepte_qte === true) {
                                 this.choixDomes[l].quantity = this.choixDomes[l].quantity+1;
-                                console.log(this.choixDomes)
                                 count ++;
                             } else {
                                 this.choixDomes[l].quantity = 1;
-                                console.log(this.choixDomes)
                                 count ++;
                             }
                         }
@@ -404,7 +399,6 @@
                             if (this.choixDomes[h].name == "") {
                                 this.choixDomes[h].name = item.fields.nom
                                 this.choixDomes[h].quantity = 1
-                                console.log(this.choixDomes)
                                 return;
                             }
                         }
@@ -510,8 +504,6 @@
                 this.axiosGetTryptique()
                 this.axiosGetDomes()
                 this.createBaiesArray()
-                // console.log(this.domesApi); 
-                // console.log(this.choixDomes); 
             },
             mounted() {
                 
@@ -571,10 +563,7 @@
     .panier{
         min-height:300px;
     }
-    .domeEdit{
-        background-color:red;
-        
-    }
+   
     
     
 
