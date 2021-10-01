@@ -26,16 +26,14 @@
                     <div v-show="buttonBaie" class="m-5">
                         <button class=" btn btn-primary" v-on:click="baiesPage">Ajouter des baies</button>
                     </div>
-                    <div v-show="buttonDome" class="m-5">
-                        <button class=" btn btn-primary" v-on:click="domesPage">Ajouter un dome</button>
+                    <div v-if="panierActif">
+                        <button class="btn btn-primary" v-on:click="editCart">Editer mon panier</button>
                     </div>
-                                                        
-                </div>  
-                <div class="d-flex justify-content-around">
-                    <button class="btn btn-primary" v-on:click="accueilPage">Accueil</button>
-                    <button class="btn btn-primary" v-on:click="formPage">C'est tout, merci ! Je génère mon devis</button>
-                    <button class="btn btn-primary" v-on:click="editCart">Editer mon panier</button>
-                </div>                               
+                    <div v-if="!panierActif">
+                        <button class="btn btn-primary" v-on:click="editCart">Fin édition</button>
+                    </div>
+                  
+                </div>
             </div>                        
         </div>
 
@@ -173,8 +171,8 @@
 
             <div class="col-lg-4 mt-5" v-show="menuButtons">
                 <div v-if="panierActif">
-                    <div class="card shadow panier" style="height: 100px;">
-                        <h3 class="d-flex justify-content-center mt-2">Mon panier</h3>
+                    <div class="card shadow panier p-3 mr-5" style="height: 100px;">
+                        <h3 class="d-flex justify-content-center">Mon panier</h3>
                         <div v-for="item in choixDomes">
                             <div class="pb-3">
                                 {{item.name}} <span style="margin-left:20px;">{{item.quantity}}</span>
@@ -183,19 +181,17 @@
                         <div>
                             <div v-if="tryptiqueIsActive">volet tryptique du pare brise : {{ choixTryptique }}</div>                   
                         </div>
-                        <div class="d-flex justify-content-center">
-                            <div v-for="(item, index) in testFunction">        
-                                <span> Baie {{index+1}} = L {{ item.longueur }} x {{ item.hauteur }}cm</span>
-                            </div>
-                        </div>                        
+                        <div v-for="(item, index) in testFunction">        
+                            <span> Baie {{index+1}} = L {{ item.longueur }} x {{ item.hauteur }}cm</span>
+                        </div>
                     </div>
                 </div>
                 <div v-else>
-                    <div class="card shadow panier" style="height: 100px;">
-                        <h3 class="d-flex justify-content-center mt-2">Edition du panier</h3>
+                    <div class="card shadow panier p-3" style="height: 100px;">
+                        <h3 class="d-flex justify-content-center">Éditer mon panier</h3>
                         <div v-for="item in choixDomes">
                             <div class="d-flex">
-                                <span class="domeEdit ">{{item.name}}</span>  <input style="margin-left:20px;" class="smallInput" v-model="item.quantity">
+                                <span class="domeEdit">{{item.name}}</span><input style="margin-left:20px;" class="smallInput" value="{{item.quantity}}" v-model="item.quantity">
                             </div>                                     
                         </div>
                         <div>
